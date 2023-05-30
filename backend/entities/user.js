@@ -3,17 +3,20 @@ import typeorm from 'typeorm';
 const User = new typeorm.EntitySchema({
   name: 'User',
   columns: {
-    id: {
+    user_id: {
       primary: true,
       type: Number,
       generated: true,
     },
-    email: {
+    user_email: {
       type: String,
       unique: true,
     },
-    firstname: { type: String },
-    lastname: { type: String },
+    user_firstname: { type: String },
+    user_lastname: { type: String },
+    user_date_of_birth: { type: Date },
+    user_password: { type: String },
+    user_salt: { type: String },
   },
 });
 
