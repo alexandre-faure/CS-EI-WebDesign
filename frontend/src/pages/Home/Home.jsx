@@ -5,7 +5,6 @@ function Home() {
   return (
     <div className="home-container">
       <FilterSide />
-      <div></div>
     </div>
   );
 }
