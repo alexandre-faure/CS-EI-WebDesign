@@ -1,0 +1,26 @@
+.button-choice {
+  font-size: 1.2em;
+  padding: 0.3em 0.7em;
+  border: 0.2em solid rgb(10, 99, 140);
+  height: 2.5em;
+  border-radius: 1.25em / 50%;
+  font-weight: bold;
+  color: rgb(10, 99, 140);
+  cursor: pointer;
+  margin: 0.2em 0.2em;
+}
+
+.button-choice.checked {
+  background-color: rgb(10, 99, 140);
+  color: white;
+}
+
+.button-choice.not-checked:hover {
+  background-color: rgb(10, 99, 140);
+  color: white;
+}
+
+.button-choice.checked:hover {
+  background-color: white;
+  color: rgb(10, 99, 140);
+}
