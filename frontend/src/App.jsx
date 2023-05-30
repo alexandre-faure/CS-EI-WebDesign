@@ -5,12 +5,15 @@ import Layout from './components/Layout/Layout';
 import Counter from './pages/Counter/Counter';
 import Profil from './pages/Profil/Profil';
 import Admin from './pages/Admin/Admin';
+import Authentification from './pages/Authentification/Authentification';
+
 
 function App() {
   return (
     <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="auth" element={<Authentification />} />
         <Route path="counter" element={<Counter />} />
         <Route path="profil" element={<Profil />} />
         <Route path="about" element={<About />} />
