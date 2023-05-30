@@ -12,8 +12,8 @@ const Header = () => {
         Counter
       </Link>
       <div>|</div>
-      <Link className="Link" to="/users">
-        Users
+      <Link className="Link" to="/profil">
+        Profil
       </Link>
       <div>|</div>
       <Link className="Link" to="/about">

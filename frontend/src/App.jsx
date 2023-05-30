@@ -3,7 +3,7 @@ import Home from './pages/Home/Home';
 import About from './pages/About/About';
 import Layout from './components/Layout/Layout';
 import Counter from './pages/Counter/Counter';
-import Users from './pages/Users/Users';
+import Profil from './pages/Profil/Profil';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="counter" element={<Counter />} />
-        <Route path="users" element={<Users />} />
+        <Route path="profil" element={<Profil />} />
         <Route path="about" element={<About />} />
       </Routes>
     </Layout>
