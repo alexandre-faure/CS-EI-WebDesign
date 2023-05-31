@@ -1,7 +1,7 @@
 import './Admin.css';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import UsersTable from '../../components/UsersTable/UsersTable';
+import CreateUsers from "../../components/CreateUsers/CreateUsers";
 import { useFetchUsers } from './useFetchUsers';
 
 function Admin() {
@@ -15,6 +15,7 @@ function Admin() {
         <h2>Gérer les utilisateur.ice.s</h2>
           <UsersTable users={users} onSuccessfulUserDeletion={fetchUsers} />
       </div>
+      <CreateUsers onSuccessfulUserCreation={fetchUsers} />
     </div>
   );
 }
