@@ -12,6 +12,7 @@ import image6 from './test-images/6.jpg';
 import image7 from './test-images/7.jpg';
 import image8 from './test-images/8.jpg';
 import image9 from './test-images/9.jpg';
+import MovieCard from '../MovieCard/MovieCard';
 
 import './MovieSlider.css';
 
@@ -60,33 +61,15 @@ function MovieSlider(data) {
           id={'movie-slider-card-container-' + data.slider_id}
         >
           <div className="movie-slider-card-scroller">
-            <div className="movie-slider-card">
-              <img className="movie-slider-image" src={image1} alt="alt" />
-            </div>
-            <div className="movie-slider-card">
-              <img className="movie-slider-image" src={image2} alt="alt" />
-            </div>
-            <div className="movie-slider-card">
-              <img className="movie-slider-image" src={image3} alt="alt" />
-            </div>
-            <div className="movie-slider-card">
-              <img className="movie-slider-image" src={image4} alt="alt" />
-            </div>
-            <div className="movie-slider-card">
-              <img className="movie-slider-image" src={image5} alt="alt" />
-            </div>
-            <div className="movie-slider-card">
-              <img className="movie-slider-image" src={image6} alt="alt" />
-            </div>
-            <div className="movie-slider-card">
-              <img className="movie-slider-image" src={image7} alt="alt" />
-            </div>
-            <div className="movie-slider-card">
-              <img className="movie-slider-image" src={image8} alt="alt" />
-            </div>
-            <div className="movie-slider-card">
-              <img className="movie-slider-image" src={image9} alt="alt" />
-            </div>
+            <MovieCard image={image1} />
+            <MovieCard image={image2} />
+            <MovieCard image={image3} />
+            <MovieCard image={image4} />
+            <MovieCard image={image5} />
+            <MovieCard image={image6} />
+            <MovieCard image={image7} />
+            <MovieCard image={image8} />
+            <MovieCard image={image9} />
           </div>
         </div>
 

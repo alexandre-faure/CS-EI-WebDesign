@@ -21,13 +21,12 @@ function GenreCheckbox(data) {
   boxIcon = data.genreId in state.genres ? faSquareCheck : faSquare;
 
   return (
-    <div className="filterside-genre">
+    <div className="filterside-genre" onClick={handleCheckboxClick}>
       <label>
         <FontAwesomeIcon
           icon={boxIcon}
           id={data.genreId}
           className="filterside-genre-checkbox"
-          onClick={handleCheckboxClick}
         />
         <div className="filterside-genre-title">{data.genreName}</div>
       </label>
