@@ -3,7 +3,7 @@ import './GenreCheckbox.css';
 function GenreCheckbox(data) {
   return (
     <div className="filterside-genre">
-      <label for={data.genreId}>
+      <label>
         <input
           type="checkbox"
           id={data.genreId}
