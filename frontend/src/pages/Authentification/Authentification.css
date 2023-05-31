@@ -166,5 +166,10 @@
 .h1auth {
     text-align: center;
     font-size: 50px;
+    color : white;
+}
+
+.h2auth{
+  color : white ;
 }
 

@@ -37,12 +37,12 @@ function Creercompte() {
                             <div className="bar"></div>
                         </div>
                         <div className="group">
-                            <input className ='inputcc' id="mdp" type="password" required="required"/>
-                            <label className = 'labelcc' htmlFor="mdp">Confirmer le mot de passe</label>
+                            <input className ='inputcc' id="confirmmdp" type="password" required="required"/>
+                            <label className = 'labelcc' htmlFor="confirmmdp">Confirmer le mot de passe</label>
                             <div className="bar"></div>
                         </div>
-                        <div className="divbutton">
-                            <button className = 'button' type="submit"><span>Créer mon compte</span></button>
+                        <div className="divbuttoncc">
+                            <button className = 'buttoncc' type="submit"><span>Créer mon compte</span></button>
                         </div>    
                     </form>
                 </div> 

@@ -7,6 +7,6 @@ import App from './App';
 
 ReactDOM.createRoot(document.getElementById('app')).render(
   <BrowserRouter>
-    <App />
+    <App nav={window.location.href.includes("auth")|window.location.href.includes("ccompte")} />
   </BrowserRouter>
 );

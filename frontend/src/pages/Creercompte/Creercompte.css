@@ -102,11 +102,11 @@
 
 /* LE BOUTON */
 
-.divbutton {
+.divbuttoncc {
     justify-items: right;
 }
 
-.button {
+.buttoncc {
     float: right;
     border-radius: 10px;
     background-color: #393939;
@@ -121,14 +121,14 @@
     margin: 5px;
 }
   
-  .button span {
+  .buttoncc span {
     cursor: pointer;
     display: inline-block;
     position: relative;
     transition: 0.5s;
   }
   
-  .button span:after {
+  .buttoncc span:after {
     content: '\00bb';
     position: absolute;
     opacity: 0;
@@ -137,11 +137,11 @@
     transition: 0.5s;
   }
   
-  .button:hover span {
+  .buttoncc:hover span {
     padding-right: 25px;
   }
   
-  .button:hover span:after {
+  .buttoncc:hover span:after {
     opacity: 1;
     right: 0;
   }
@@ -154,18 +154,12 @@
 .h1cc {
     text-align: center;
     font-size: 50px;
+    color : white ;
 }
 
-
-
-
-
-
-
-
-
-
-
+.h2cc{
+  color : white ;
+}
 
 
 
