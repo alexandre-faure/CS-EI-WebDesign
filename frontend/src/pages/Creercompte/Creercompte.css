@@ -28,7 +28,7 @@
     position: relative;
   }
   
-  .labelauth {
+  .labelcc {
     position: absolute;
     top: 30px;
     color: rgba(255, 255, 255, 0.5);
@@ -37,7 +37,7 @@
     font-size: 20px;
 }
   
-  .inputauth {
+  .inputcc {
     display: block;
     width: 100%;
     padding-top: 40px;
@@ -50,39 +50,39 @@
 }
 
 
-  .inputauth:valid ~ label {
+  .inputcc:valid ~ label {
     top: 0;
     color: rgba(255, 255, 255, 0.5);
     font-size: 15px;
   }
 
-  .inputauth:focus {
+  .inputcc:focus {
     outline: none;
   }
 
-  .inputauth:focus ~ label {
+  .inputcc:focus ~ label {
     font-size: 15px;
     top: 0;
     color: #2196f3;
   }
 
-  .inputauth[type=password] {
+  .inputcc[type=password] {
     letter-spacing: 0.2em;
   }
 
-  .inputauth:focus ~ .bar:before {
+  .inputcc:focus ~ .bar:before {
     transform: translateX(0);
   }
 
-  .inputauth:-webkit-autofill {
+  .inputcc:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #333 inset;
-    -webkit-text-fill-color: white !important;
+    -webkit-text-fill-color: rgb(255, 255, 255) !important;
   }
   
   .bar {
     background: rgba(255, 255, 255, 0.5);
     content: "";
-    width: 550px;
+    width: 551px;
     height: 3.6666666667px;
     transition: 0.3s ease;
     position: relative;
@@ -102,11 +102,11 @@
 
 /* LE BOUTON */
 
-.divbutton {
+.divbuttoncc {
     justify-items: right;
 }
 
-.button {
+.buttoncc {
     float: right;
     border-radius: 10px;
     background-color: #393939;
@@ -115,20 +115,20 @@
     text-align: center;
     font-size: 20px;
     padding: 10px;
-    width: 200px;
+    width: 250px;
     transition: all 0.5s;
     cursor: pointer;
     margin: 5px;
 }
   
-  .button span {
+  .buttoncc span {
     cursor: pointer;
     display: inline-block;
     position: relative;
     transition: 0.5s;
   }
   
-  .button span:after {
+  .buttoncc span:after {
     content: '\00bb';
     position: absolute;
     opacity: 0;
@@ -137,39 +137,79 @@
     transition: 0.5s;
   }
   
-  .button:hover span {
+  .buttoncc:hover span {
     padding-right: 25px;
   }
   
-  .button:hover span:after {
+  .buttoncc:hover span:after {
     opacity: 1;
     right: 0;
   }
 
-  .creation {
-    color: darkgrey;
-    font-size: 15px;
-    float: left;
-    float: bottom;
-    padding: 25px 0px;
-}
-
-.creation:hover {
-  color:#2196f3;
-  cursor: pointer;
-}
 
 
 
 /* LES TITRES */
 
-.h1auth {
+.h1cc {
     text-align: center;
     font-size: 50px;
-    color : white;
+    color : white ;
 }
 
-.h2auth{
+.h2cc{
   color : white ;
 }
 
+
+
+
+
+
+
+/* LA DATE */
+  
+.inputccdate {
+    display: block;
+    width: 100%;
+    padding-top: 40px;
+    border: none;
+    border-radius: 0;
+    color: #333;
+    background: #333;
+    font-size: 20px;
+    transition: 0.3s ease;
+}
+
+
+  .inputccdate:valid ~ label {
+    top: 0;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 15px;
+  }
+
+
+  .inputccdate:valid{
+    color : white ;
+  }
+
+  
+  .inputccdate:focus {
+    outline: none;
+    color: white;
+  }
+
+  .inputccdate:focus ~ label {
+    font-size: 15px;
+    top: 0;
+    color: #2196f3;
+  }
+
+  .inputccdate:focus ~ .bar:before {
+    transform: translateX(0);
+  }
+
+  .inputccdate:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #333 inset;
+    -webkit-date-fill-color: white !important;
+  }

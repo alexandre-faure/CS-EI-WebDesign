@@ -12,12 +12,12 @@ const Header = () => {
         Counter
       </Link>
       <div>|</div>
-      <Link className="Link" to="/auth">
-        Authentification
-      </Link>
-      <div>|</div>
       <Link className="Link" to="/profil">
         Profil
+      </Link>
+      <div>|</div>
+      <Link className="Link" to="/mlistes">
+        Mes listes
       </Link>
       <div>|</div>
       <Link className="Link" to="/about">
