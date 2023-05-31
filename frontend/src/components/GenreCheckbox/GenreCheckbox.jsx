@@ -1,6 +1,6 @@
 import './GenreCheckbox.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquareCheck } from '@fortawesome/free-solid-svg-i  ';
+import { faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 import { faSquare } from '@fortawesome/free-solid-svg-icons';
 import { useContext } from 'react';
 import $ from 'jquery';
