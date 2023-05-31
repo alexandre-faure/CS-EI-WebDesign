@@ -6,6 +6,7 @@ import Counter from './pages/Counter/Counter';
 import Profil from './pages/Profil/Profil';
 import Admin from './pages/Admin/Admin';
 import Authentification from './pages/Authentification/Authentification';
+import Creercompte from './pages/Creercompte/Creercompte';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="profil" element={<Profil />} />
         <Route path="about" element={<About />} />
         <Route path="admin" element={<Admin />} />
+        <Route path="ccompte" element={<Creercompte />} />
       </Routes>
     </Layout>
   );
