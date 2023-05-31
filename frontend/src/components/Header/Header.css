@@ -1,21 +1,35 @@
 .Header-container {
-  position: fixed;
+  position: sticky;
   z-index: 10;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  padding: 5px;
-  font-size: 1.2em;
-  background-color: rgb(30, 30, 30);
-  padding-bottom: 0.5em;
+  justify-content: left;
+  align-items: center;
+  padding-left: 20px;
+  font-size: 110%;
+  background-color: #237793;
   width: 100%;
-}
-
-.Header-container > :not(:last-child) {
-  margin-right: 10px;
+  height: 50px;
 }
 
 .Link {
-  font-weight: 600;
   color: white;
+  padding-left: 15px;
+  text-decoration: none;
+  transition: color 0.1s linear;
+}
+
+.Link:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.header-logo {
+  height: 100%;
+  width: auto;
+}
+
+.header-logo-container {
+  height: 30px;
+  padding-right: 20px;
+  transform: scaleX(-1);
 }
