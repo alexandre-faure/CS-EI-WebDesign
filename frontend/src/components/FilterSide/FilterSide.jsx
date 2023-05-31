@@ -1,5 +1,8 @@
 import './FilterSide.css';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
+import $ from 'jquery';
 import GenreCheckbox from '../GenreCheckbox/GenreCheckbox';
 import { HomeContext, HomeDispatchContext } from '../../contexts/HomeContext';
 
@@ -22,11 +25,33 @@ function reducer(state, action) {
 
 function FilterSide() {
   const [state, dispatch] = useReducer(reducer, { genres: {} });
+  const [filterIsOpen, setFilterIsOpen] = useState(0);
+
+  function handleClickOnHamburger() {
+    if (filterIsOpen) {
+      setFilterIsOpen(0);
+    } else {
+      setFilterIsOpen(1);
+    }
+  }
 
   return (
     <HomeContext.Provider value={state}>
       <HomeDispatchContext.Provider value={dispatch}>
-        <div className="filterside-container">
+        <div
+          className={
+            'filterside-container ' +
+            (filterIsOpen ? 'filterside-container-isopen' : '')
+          }
+          id="filterside-container"
+        >
+          <div className="filterside-hamburger">
+            <FontAwesomeIcon
+              onClick={handleClickOnHamburger}
+              icon={filterIsOpen ? faXmark : faBars}
+              size="lg"
+            />
+          </div>
           <div className="filterside-h1">Filtrer</div>
           <div className="filterside-h2">Genre</div>
           <div className="filterside-genre-list-container">
