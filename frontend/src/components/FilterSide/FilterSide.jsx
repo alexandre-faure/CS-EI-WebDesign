@@ -1,30 +1,14 @@
 import './FilterSide.css';
-import { useEffect, useReducer, useState } from 'react';
+import { useContext, useEffect, useReducer, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
 import $ from 'jquery';
 import GenreCheckbox from '../GenreCheckbox/GenreCheckbox';
 import { HomeContext, HomeDispatchContext } from '../../contexts/HomeContext';
 
-function reducer(state, action) {
-  switch (action.type) {
-    case 'toggleGenre':
-      var newState = JSON.parse(JSON.stringify(state));
-      if (newState.genres[action.payload.genreId]) {
-        delete newState.genres[action.payload.genreId];
-      } else {
-        newState.genres[action.payload.genreId] = true;
-      }
-
-      return newState;
-
-    default:
-      return state;
-  }
-}
-
 function FilterSide() {
-  const [state, dispatch] = useReducer(reducer, { genres: {} });
+  const state = useContext(HomeContext);
+  const dispatch = useContext(HomeDispatchContext);
   const [filterIsOpen, setFilterIsOpen] = useState(0);
 
   function handleClickOnHamburger() {
