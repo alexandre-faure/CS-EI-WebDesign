@@ -1,13 +1,32 @@
 .filterside-container {
-  background-color: aqua;
+  background-color: rgba(255, 255, 255, 0.2);
   min-width: 200px;
   flex-grow: 0;
   flex-shrink: 0;
   width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
 @media screen and (min-width: 800px) {
   .filterside-container {
     width: 200px;
   }
+}
+
+.filterside-h1 {
+  font-size: 130%;
+  font-weight: bold;
+  padding-top: 10px;
+}
+
+.filterside-h2 {
+  padding-top: 10px;
+  font-weight: bold;
+  padding-bottom: 5px;
+  padding-left: 15px;
+}
+
+.filterside-genre-list-container {
+  padding-left: 40px;
 }
