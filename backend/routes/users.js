@@ -4,7 +4,7 @@ import User from '../entities/user.js';
 
 const router = express.Router();
 
-router.get('/', function (req, res) {
+router.get('/', function (req, res) { // Renvoie tous les users
   appDataSource
     .getRepository(User)
     .find({})
@@ -13,12 +13,15 @@ router.get('/', function (req, res) {
     });
 });
 
-router.post('/new', function (req, res) {
+router.post('/new', function (req, res) { // Crée un user
   const userRepository = appDataSource.getRepository(User);
   const newUser = userRepository.create({
-    email: req.body.email,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
+    user_email: req.body.email,
+    user_firstname: req.body.firstname,
+    user_lastname: req.body.lastname,
+    user_date_of_birth: req.body.date_of_birth,
+    user_password: req.body.password,
+    user_salt: "thisisasalt"
   });
 
   userRepository
@@ -30,10 +33,10 @@ router.post('/new', function (req, res) {
       console.error(error);
       if (error.code === '23505') {
         res.status(400).json({
-          message: `User with email "${newUser.email}" already exists`,
+          message: `L'utilisateur avec l'email "${newUser.email}" existe déjà.`,
         });
       } else {
-        res.status(500).json({ message: 'Error while creating the user' });
+        res.status(500).json({ message: 'Erreur lors de la création de l\'utilisateur.' });
       }
     });
 });
@@ -41,12 +44,12 @@ router.post('/new', function (req, res) {
 router.delete('/:userId', function (req, res) {
   appDataSource
     .getRepository(User)
-    .delete({ id: req.params.userId })
+    .delete({ user_id: req.params.userId })
     .then(function () {
-      res.status(204).json({ message: 'User successfully deleted' });
+      res.status(204).json({ message: 'User supprimé avec succès.' });
     })
     .catch(function () {
-      res.status(500).json({ message: 'Error while deleting the user' });
+      res.status(500).json({ message: 'Une erreur est survenue lors de la supression du user.' });
     });
 });
 
