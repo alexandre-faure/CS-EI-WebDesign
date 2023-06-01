@@ -1,5 +1,6 @@
 .vote-bar-container {
   height: 50px;
+<<<<<<< HEAD
   width: 230px;
   box-sizing: border-box;
   padding: 10px 0;
@@ -7,6 +8,15 @@
 
 .vote-bar-outside {
   background-color: #fff;
+=======
+  width: 250px;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.vote-bar-outside {
+  background-color: orange;
+>>>>>>> 410ebd8 (big commit)
   height: 100%;
   width: 100%;
   border-radius: 100px;

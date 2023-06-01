@@ -16,6 +16,19 @@ function MovieDetails(data) {
   function handleClickOnDetailsCross() {
     dispatch({ type: 'closeDetails' });
   }
+  function handleSliderUpdate() {}
+
+  function handleClickOnToSee() {
+    dispatch({ type: 'toggleToSee' });
+  }
+
+  function handleClickOnSeen() {
+    dispatch({ type: 'toggleSeen' });
+  }
+
+  const newVote = String(state.movieDetails.vote_average / 2).substring(0, 3);
+  const filmIsSeen = state.movieCustomDetails.seen;
+  const filmIsToSee = state.movieCustomDetails.toSee;
 
   function handleClickOnToSee() {
     dispatch({ type: 'toggleToSee' });
