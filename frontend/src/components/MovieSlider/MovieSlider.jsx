@@ -61,18 +61,17 @@ function MovieSlider(data) {
           id={'movie-slider-card-container-' + data.slider_id}
         >
           <div className="movie-slider-card-scroller">
-            <MovieCard image={image1} title={'test'} />
-            <MovieCard
-              image={image2}
-              title={'Isabelle a les yeux bleus et moi aussi'}
-            />
-            <MovieCard image={image3} />
-            <MovieCard image={image4} />
-            <MovieCard image={image5} />
-            <MovieCard image={image6} />
-            <MovieCard image={image7} />
-            <MovieCard image={image8} />
-            <MovieCard image={image9} />
+            {data.movieList.map((movie) => {
+              return (
+                <MovieCard
+                  movie={movie}
+                  image={
+                    'url(https://image.tmdb.org/t/p/w500' + movie.poster_path
+                  }
+                  key={movie.poster_path}
+                />
+              );
+            })}
           </div>
         </div>
 
