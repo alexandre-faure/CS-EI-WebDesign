@@ -2,7 +2,6 @@ import express from 'express';
 import { appDataSource } from '../datasource.js';
 import Movie_User from '../entities/movie_user.js';
 import axios from 'axios';
-import { userInfo } from 'os';
 
 const router = express.Router();
 

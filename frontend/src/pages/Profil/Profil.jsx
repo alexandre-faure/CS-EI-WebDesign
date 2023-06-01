@@ -33,7 +33,7 @@ function Profil() {
 
   const testRecommandations = () => {
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/recommandation/8/5`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}/populaires/8`)
       .then((response) => {
         console.log(response)
         console.log("Recommandation effectuée avec succès.")
