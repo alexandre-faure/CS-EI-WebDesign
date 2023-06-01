@@ -31,6 +31,21 @@ function Profil() {
   const [prefDate, setPrefDate] = useState(false)
 
 
+  const testRecommandations = () => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/recommandation/8/5`)
+      .then((response) => {
+        console.log(response)
+        console.log("Recommandation effectuée avec succès.")
+      })
+      .catch((error) => {
+        console.log("Une erreur est survenue lors de la recherche de recommandations.")
+        console.error(error);
+      });
+  }
+
+  useEffect(testRecommandations, [])
+
   const loadDataFromProfile = () => {
 
   };
