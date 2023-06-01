@@ -73,7 +73,6 @@ function Profil() {
     axios
       .put(`${import.meta.env.VITE_BACKEND_URL}/users/${cookies_infos.user_id}`, update_body)
       .then(() => {
-        console.log("Update effectuée avec succès.")
       })
       .catch((error) => {
         console.log("Une erreur est survenue lors de l'update.")
@@ -89,7 +88,6 @@ function Profil() {
   const handleTriClick = (idRadio) => {
     if (formValues.user_pref_tri == idRadio) {
       setFormValues({...formValues, user_pref_tri: 0})
-      .then(updateProfile)
     } else {
       setFormValues({...formValues, user_pref_tri: idRadio})
     }
@@ -124,7 +122,7 @@ function Profil() {
 
   // Choisir la date comme critère de filtre ou non
   const changeInputDisabled = (input) => {
-    if (input="pref_date"){
+    if (input=="pref_date"){
       setFormValues({...formValues, user_pref_date_dbt:'', user_pref_date_fin:''})
     }
     setDisabledInput({...disabledInput, [input]:!(disabledInput[input])})

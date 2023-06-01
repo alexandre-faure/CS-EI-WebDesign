@@ -10,7 +10,7 @@ function InputProfile({ label, inputName, formValues, setFormValues, disabledInp
       <td className={"input-container " + (disabledInput[inputName] ? "readonly" : "edit")}>
         <input id={label.toLowerCase().replace(" ", "-") + "-input"}
         type={type}
-        placeholder={'Your ' + label.toLowerCase()}
+        placeholder={label.toLowerCase()}
         value={formValues[inputName]}
         disabled={disabledInput[inputName]}
         onChange={event => {
