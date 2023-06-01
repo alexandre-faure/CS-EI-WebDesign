@@ -19,6 +19,10 @@ function FilterSide() {
     }
   }
 
+  function handleClickOnDisplayOption(id) {
+    dispatch({ type: 'displayUpdate', payload: { id: id } });
+  }
+
   return (
     <HomeContext.Provider value={state}>
       <HomeDispatchContext.Provider value={dispatch}>
@@ -35,6 +39,25 @@ function FilterSide() {
               icon={filterIsOpen ? faChevronUp : faChevronDown}
               size="lg"
             />
+          </div>
+          <div className="filterside-pages-container">
+            {state.displayOptions.map((display) => {
+              return (
+                <div
+                  className={
+                    'filterside-page-title ' +
+                    (state.activeDisplay === display.id
+                      ? 'filterside-active-display'
+                      : '')
+                  }
+                  onClick={() => {
+                    handleClickOnDisplayOption(display.id);
+                  }}
+                >
+                  {display.title}
+                </div>
+              );
+            })}
           </div>
           <div className="filterside-h1">Filtrer</div>
           <div className="filterside-h2">Genre</div>

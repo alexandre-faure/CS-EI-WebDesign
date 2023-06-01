@@ -1,0 +1,30 @@
+.welcome-box-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 10% 20px;
+}
+
+.welcome-box-title {
+  font-family: Montserrat, sans-serif;
+  font-size: 170%;
+}
+
+.welcome-box-search {
+  height: 40px;
+  width: 20%;
+  border-radius: 0;
+  border: none;
+  box-sizing: border-box;
+  font-size: 90%;
+  padding: 0 10px 0;
+  background-color: #fff;
+  font-family: Lato, sans-serif;
+  min-width: 200px;
+}
+
+.welcome-box-search:focus {
+  outline: none;
+}
