@@ -3,7 +3,7 @@ import './Creercompte.css';
 function Creercompte() {
     return (
         <div>
-              <h1 className = 'h1cc'>Bienvenue sur "Ma Filmothéque"</h1> 
+              <h1 className = 'h1cc'>Bienvenue sur "CineSuggest"</h1> 
                 <form className="centered" action="/ma-page-de-traitement" method="post">
                     <h2 className = 'h2cc'>Créer votre compte</h2>
                         <div className="group">
