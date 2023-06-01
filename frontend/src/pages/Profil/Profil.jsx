@@ -34,7 +34,7 @@ function Profil() {
 
   const loadDataFromProfile = () => {
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/users/8`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}/users/17`)
       .then((response) => {
         const infos_user = response.data.user[0]
         setFormValues({
@@ -49,7 +49,7 @@ function Profil() {
           user_pref_date_fin: moment(infos_user.user_pref_date_fin).format('YYYY-MM-DD')
         });
         setDisabledInput({...disabledInput,
-          pref_date: infos_user.user_pref_date_dbt == null })
+          pref_date: [null, ""].includes(infos_user.user_pref_date_dbt) })
 
         console.log("User récupéré avec succès.")
       })
@@ -64,7 +64,7 @@ function Profil() {
   const updateProfile = () => {
     const update_body = {...formValues, user_pref_categories: formValues.user_pref_categories.join(',')};
     axios
-      .put(`${import.meta.env.VITE_BACKEND_URL}/users/8`, update_body)
+      .put(`${import.meta.env.VITE_BACKEND_URL}/users/17`, update_body)
       .then(() => {
         console.log("Update effectuée avec succès.")
       })
@@ -117,6 +117,9 @@ function Profil() {
 
   // Choisir la date comme critère de filtre ou non
   const changeInputDisabled = (input) => {
+    if (input="pref_date"){
+      setFormValues({...formValues, user_pref_date_dbt:'', user_pref_date_fin:''})
+    }
     setDisabledInput({...disabledInput, [input]:!(disabledInput[input])})
   };
 
@@ -161,7 +164,7 @@ function Profil() {
         : <p>Seuls les films appartenant aux catégories séléctionnées seront affichés.</p>}
         <div id="profile-genres-container">
           {genres.map((genre) => {
-            return <ButtonChoice key={genre.category_id} idGenre={genre.category_id} label={genre.category_title}
+            return <ButtonChoice key={genre.category_id} idGenre={String(genre.category_id)} label={genre.category_title}
             checkedGenres={formValues.user_pref_categories} handleButtonClick={handleButtonClick} />
           })}
         </div>

@@ -5,18 +5,18 @@ import axios from 'axios';
 
 const router = express.Router();
 
-async function getFilmsPopulaires() {
+async function getFilmsMieuxNotes() {
     try {
-      const response = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=522d421671cf75c2cba341597d86403a`);
+      const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=522d421671cf75c2cba341597d86403a&sort_by=vote_average.desc`);
       return response.data;
     } catch (error) {
-      console.error(`Erreur lors de la récupération des détails des films populaires`);
+      console.error(`Erreur lors de la récupération des détails du film avec l'ID ${idFilm}:`, error);
       return null;
     }
   }
 
 router.get('/:id_user', async function (req, res) {
-    const movies = await getFilmsPopulaires();
+    const movies = await getFilmsMieuxNotes();
     if (movies) {
         appDataSource
         .getRepository(Movie_User)
