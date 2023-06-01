@@ -1,0 +1,39 @@
+.movie-details-container {
+  z-index: 50;
+  position: fixed;
+  height: calc(100vh - 50px);
+  width: 100vw;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 330px;
+}
+
+.movie-details-card {
+  height: calc(100% - 40px);
+  width: calc(100% - 40px);
+  min-width: 300px;
+  background-color: rgb(29, 53, 87);
+  position: relative;
+}
+
+@media screen and (min-width: 600px) {
+  .movie-details-card {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .movie-details-card {
+    width: 60%;
+  }
+}
+
+.movie-details-cross {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
