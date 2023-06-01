@@ -8,6 +8,7 @@
   ],
   "plugins": ["import", "jsx-a11y"],
   "rules": {
+    "linebreak-style":0,
     "curly": ["error", "all"],
     "eqeqeq": ["error", "smart"],
     "import/no-extraneous-dependencies": [
