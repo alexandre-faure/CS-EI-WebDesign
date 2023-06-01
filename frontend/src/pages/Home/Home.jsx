@@ -1,7 +1,6 @@
 import { useEffect, useReducer } from 'react';
 import FilterSide from '../../components/FilterSide/FilterSide';
 import MovieSide from '../../components/MovieSide/MovieSide';
-import SearchBar from '../../components/SearchBar/SearchBar';
 
 import { HomeContext } from '../../contexts/HomeContext';
 import { HomeDispatchContext } from '../../contexts/HomeContext';
@@ -45,6 +44,18 @@ function reducer(state, action) {
       });
 
       return newState;
+    case 'searchUpdate':
+      newState = JSON.parse(JSON.stringify(state));
+      newState.searchBar = action.payload.searchBar;
+      console.log(newState.searchBar);
+
+      return newState;
+
+    case 'displayUpdate':
+      newState = JSON.parse(JSON.stringify(state));
+      newState.activeDisplay = action.payload.id;
+
+      return newState;
 
     default:
       return state;
@@ -85,6 +96,13 @@ function Home() {
     movieDetailsIsOpen: false,
     movieDetails: {},
     homeSliders: [],
+    searchBar: '',
+    displayOptions: [
+      { title: 'Par défaut', id: 'default' },
+      { title: 'Recommandations', id: 'recommandations' },
+      { title: 'Populaires', id: 'popular' },
+    ],
+    activeDisplay: 'default',
   });
 
   useEffect(() => {
@@ -99,14 +117,7 @@ function Home() {
     <HomeContext.Provider value={state}>
       <HomeDispatchContext.Provider value={dispatch}>
         <MovieDetails state={state} dispatch={dispatch} />
-        <div
-          className="home-container"
-          style={{
-            height: state.movieDetailsIsOpen ? 'calc(100vh - 50px)' : 'auto',
-            overflow: state.movieDetailsIsOpen ? 'hidden' : 'visible',
-          }}
-        >
-          <SearchBar />
+        <div className="home-container">
           <FilterSide />
           <MovieSide />
         </div>

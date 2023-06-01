@@ -37,7 +37,6 @@
 
 .movie-slider-card-container {
   flex-grow: 1;
-
   overflow: scroll;
   position: relative;
   -ms-overflow-style: none;
@@ -49,6 +48,7 @@
 }
 
 .movie-slider-card-scroller {
+  column-gap: 10px;
   display: flex;
   flex-direction: row;
   position: relative;
