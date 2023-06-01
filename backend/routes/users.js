@@ -19,9 +19,10 @@ router.post('/new', function (req, res) { // Crée un user
     user_email: req.body.email,
     user_firstname: req.body.firstname,
     user_lastname: req.body.lastname,
+    user_pseudo: req.body.pseudo,
     user_date_of_birth: req.body.date_of_birth,
     user_password: req.body.password,
-    user_salt: "thisisasalt"
+    user_salt: req.body.salt
   });
 
   userRepository
