@@ -16,7 +16,6 @@ function MovieDetails(data) {
   function handleClickOnDetailsCross() {
     dispatch({ type: 'closeDetails' });
   }
-  function handleSliderUpdate() {}
 
   function handleClickOnToSee() {
     dispatch({ type: 'toggleToSee' });
@@ -82,15 +81,10 @@ function MovieDetails(data) {
               </div>
             </div>
             <div className="movie-details-rate-slider-container">
-              <input
-                type="range"
-                min={0.5}
-                max={5}
-                step={0.5}
-                className="movie-details-rate-slider"
-                onChange={handleSliderUpdate}
-              />
               <VoteBar />
+              <div className="movie-details-rate-slider-text">
+                ( {state.movieCustomDetails.personalVote} / 5 )
+              </div>
             </div>
           </div>
           <div className="movie-details-button-row">

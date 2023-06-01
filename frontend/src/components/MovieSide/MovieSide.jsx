@@ -27,7 +27,7 @@ function MovieSide() {
           );
         })
       ) : (
-        <FullPageList movies={state.homeSliders[0].movies} />
+        <FullPageList title={'default'} movies={state.homeSliders[0].movies} />
       )}
     </div>
   );
