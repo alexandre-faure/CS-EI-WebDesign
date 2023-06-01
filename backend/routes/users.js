@@ -19,9 +19,10 @@ router.post('/new', function (req, res) { // Crée un user
     user_email: req.body.email,
     user_firstname: req.body.firstname,
     user_lastname: req.body.lastname,
+    user_pseudo: req.body.pseudo,
     user_date_of_birth: req.body.date_of_birth,
     user_password: req.body.password,
-    user_salt: "thisisasalt"
+    user_salt: req.body.salt
   });
 
   userRepository
@@ -50,6 +51,19 @@ router.delete('/:userId', function (req, res) {
     })
     .catch(function () {
       res.status(500).json({ message: 'Une erreur est survenue lors de la supression du user.' });
+    });
+});
+
+router.put('/:userId', function (req, res) {
+  appDataSource
+    .getRepository(User)
+    .set(req.body)
+    .where(`user_id = ${req.params.userId}`)
+    .then(function () {
+      res.status(204).json({ message: 'User mis à jour.' });
+    })
+    .catch(function () {
+      res.status(500).json({ message: 'Une erreur est survenue lors de la mise à jour du user.' });
     });
 });
 

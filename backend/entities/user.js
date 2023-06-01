@@ -14,6 +14,7 @@ const User = new typeorm.EntitySchema({
     },
     user_firstname: { type: String },
     user_lastname: { type: String },
+    user_pseudo: { type: String },
     user_date_of_birth: { type: Date },
     user_password: { type: String, default:"password" },
     user_salt: { type: String, default:"salt" },

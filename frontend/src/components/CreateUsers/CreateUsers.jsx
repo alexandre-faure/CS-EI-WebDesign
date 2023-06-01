@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import './CreateUsers.css';
+import bcrypt from 'bcryptjs';
 
 function CreateUsers( { onSuccessfulUserCreation } ) {
   const [nbNewUsers, setNbNewUsers] = useState(0);
@@ -38,13 +39,17 @@ function CreateUsers( { onSuccessfulUserCreation } ) {
       setUserCreationError(null);
       setNbNewUsers(0);
 
+      const salt = bcrypt.genSaltSync(10);
+
       axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/users/new`, {
         email: generateRandomString(8, 1) + "@" + generateRandomString(6, 1) + ".fr",
         firstname:generateRandomString(1, 0) + generateRandomString(6, 1),
         lastname:generateRandomString(8, 0),
+        pseudo:generateRandomString(8, 0),
         date_of_birth:"01/01/2000",
-        password:"password",
+        salt: salt,
+        password:bcrypt.hashSync("password", salt)
       })
       .then(() => {
         displayCreationSuccessMessage();
@@ -70,7 +75,7 @@ function CreateUsers( { onSuccessfulUserCreation } ) {
           className="add-user-input"
           required
           type="number"
-          placeholder="Exemple : 5"
+          placeholder="5"
           value={nbNewUsers}
           onChange={(event) =>
             setNbNewUsers(event.target.value)
