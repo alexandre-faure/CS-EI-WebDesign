@@ -2,8 +2,38 @@ import express from 'express';
 import { appDataSource } from '../datasource.js';
 import Movie_User from '../entities/movie_user.js';
 import axios from 'axios';
+import { userInfo } from 'os';
 
 const router = express.Router();
+
+async function getDetailsFilm(idFilm) {
+    try {
+      const response = await axios.get(`https://api.themoviedb.org/3/movie/${idFilm}?api_key=522d421671cf75c2cba341597d86403a`);
+      return response.data;
+    } catch (error) {
+      console.error(`Erreur lors de la récupération des détails du film avec l'ID ${idFilm}:`, error);
+      return null;
+    }
+  }
+
+async function getDetailsFilms(listeIdFilms, infos_user) {
+    const films = [];
+
+    for (const idFilm of listeIdFilms) {
+        const detailsFilm = await getDetailsFilm(idFilm);
+        if (detailsFilm) {
+            if (idFilm in infos_user){
+                detailsFilm.infos_user = infos_user[idFilm];
+            }
+            else{
+                detailsFilm.infos_user = {status:0, like:0};
+            }
+            films.push(detailsFilm);
+        }
+    }
+
+    return films;
+}
 
 router.get('/:user_id/:nb', function (req, res) { // Renvoie tous les users
   appDataSource
@@ -13,9 +43,13 @@ router.get('/:user_id/:nb', function (req, res) { // Renvoie tous les users
         const id_user = req.params.user_id;
         const nb_user_sim = 10;
         // Récupérer les likes par utilisateur
+        const infos_user = {}
       const dataPerUser = {};
       movie_user.forEach(row => {
         if (row.movie_user_like != 0){
+            if (row.movie_user_id_user == id_user){
+                infos_user[row.movie_user_id_movie] = {status:row.movie_user_status, like:row.movie_user_like}
+            }
             if (row.movie_user_id_user in dataPerUser){
                 dataPerUser[row.movie_user_id_user] = {...dataPerUser[row.movie_user_id_user], [row.movie_user_id_movie]:row.movie_user_like}
             }
@@ -24,6 +58,8 @@ router.get('/:user_id/:nb', function (req, res) { // Renvoie tous les users
             }
       }
       });
+
+      console.log(infos_user)
 
       // Calculer la similitude entre l'utilisateur choisi et les autres
       const characteristics = {};
@@ -67,7 +103,7 @@ router.get('/:user_id/:nb', function (req, res) { // Renvoie tous les users
 
       // Suppresion des films déjà vus
       const movies_recommandations = Object.fromEntries(
-        Object.entries(movies).filter(([_, value]) => !(id_user in value))
+        Object.entries(movies).filter(([key, _]) => (key in infos_user ? infos_user[key].status != 2 : true))
       );
 
     const movie_pertinence = {};
@@ -79,18 +115,23 @@ router.get('/:user_id/:nb', function (req, res) { // Renvoie tous les users
         let pertinence = 0;
         let somme_sim = 0;
         triUsers.map(user => {
-            console.log(pertinence)
-            console.log(somme_sim)
             pertinence += user[1].sim * (user[1].like - characteristics[user[0]].moy)
             somme_sim += Math.abs(user[1].sim);
         })
         movie_pertinence[key] = moyX + pertinence/somme_sim;
       })
 
-      axios
-        .get()
+      const list_id_sims = Object.entries(movie_pertinence).sort(([, valueA], [, valueB]) => valueB - valueA).slice(0, req.params.nb);
+      const list_id = list_id_sims.map(([first_elem]) => first_elem);
 
-      res.json({movie_user: movie_pertinence});
+      getDetailsFilms(list_id, infos_user)
+        .then((response) => {
+            res.json({movies: response});
+        })
+        .catch((error) => {
+            console.log("Une erreur est survenue.")
+            console.log(error)
+        })
     })
     .catch(function(error){
         console.log(error)
