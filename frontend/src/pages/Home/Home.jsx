@@ -116,6 +116,15 @@ function reducer(state, action) {
       }
 
       return newState;
+    case 'toggleDate':
+      newState = JSON.parse(JSON.stringify(state));
+      if (newState.dates[action.payload.dateId]) {
+        delete newState.dates[action.payload.dateId];
+      } else {
+        newState.dates[action.payload.dateId] = true;
+      }
+
+      return newState;
     case 'openDetails':
       newState = JSON.parse(JSON.stringify(state));
 
@@ -179,6 +188,12 @@ function reducer(state, action) {
 
       return newState;
 
+    case 'updateVote':
+      newState = JSON.parse(JSON.stringify(state));
+      newState.movieCustomDetails.personalVote = action.payload.vote;
+
+      return newState;
+
     default:
       return state;
   }
@@ -216,6 +231,20 @@ function Home() {
   const [state, dispatch] = useReducer(reducer, {
     genres: {},
     categories: [],
+    dateCategories: [
+      { title: '1920-1930', id: '1920' },
+      { title: '1930-1940', id: '1930' },
+      { title: '1940-1950', id: '1940' },
+      { title: '1950-1960', id: '1950' },
+      { title: '1960-1970', id: '1960' },
+      { title: '1970-1980', id: '1970' },
+      { title: '1980-1990', id: '1980' },
+      { title: '1990-2000', id: '1990' },
+      { title: '2000-2010', id: '2000' },
+      { title: '2010-2020', id: '2010' },
+      { title: '2020-2030', id: '2020' },
+    ],
+    dates: {},
     movieDetailsIsOpen: false,
     movieDetails: lalaland,
     movieCustomDetails: { seen: false, toSee: false, personalVote: 5 },

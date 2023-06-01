@@ -5,6 +5,7 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import $ from 'jquery';
 import GenreCheckbox from '../GenreCheckbox/GenreCheckbox';
 import { HomeContext, HomeDispatchContext } from '../../contexts/HomeContext';
+import DateCheckbox from '../DateCheckbox/DateCheckbox';
 
 function FilterSide() {
   const state = useContext(HomeContext);
@@ -75,6 +76,11 @@ function FilterSide() {
             })}
           </div>
           <div className="filterside-h2">Date</div>
+          <div className="filterside-date-list-container">
+            {state.dateCategories.map((date) => {
+              return <DateCheckbox date={date} key={date.id} />;
+            })}
+          </div>
         </div>
       </HomeDispatchContext.Provider>
     </HomeContext.Provider>

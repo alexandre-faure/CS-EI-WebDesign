@@ -1,44 +1,53 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import './VoteBar.css';
 import $ from 'jquery';
+import {
+  HomeContext,
+  HomeDispatchContext,
+} from '../../contexts/HomeContext.js';
 
 function VoteBar() {
+  const state = useContext(HomeContext);
+  const dispatch = useContext(HomeDispatchContext);
   function dragHandle(handle) {
     var pos1 = 0,
-      pos3 = 0;
+      pos2 = 0;
     var newValue = parseInt(handle.css('marginLeft'));
+    var lastValue = newValue;
 
     handle.on('mousedown', dragMouseDown);
 
     function dragMouseDown(e) {
       e = e || window.event;
       e.preventDefault();
-      // get the mouse cursor position at startup:
-      pos3 = e.clientX;
+      pos2 = e.clientX;
       document.onmouseup = closeDragElement;
-      // call a function whenever the cursor moves:
       document.onmousemove = elementDrag;
     }
 
     function elementDrag(e) {
       e = e || window.event;
       e.preventDefault();
-      // calculate the new cursor position:
-      pos1 = pos3 - e.clientX;
-      pos3 = e.clientX;
-      // set the element's new position:
+      pos1 = pos2 - e.clientX;
+      pos2 = e.clientX;
       newValue = parseInt(handle.css('marginLeft')) - pos1;
-      console.log(newValue);
       if ((newValue >= 0) & (newValue <= 196)) {
+        lastValue = newValue;
         handle.css(
           'margin-left',
           parseInt(handle.css('marginLeft')) - pos1 + 'px'
         );
+
+        dispatch({
+          type: 'updateVote',
+          payload: { vote: Math.floor((lastValue / 196) * 9 + 1) / 2 },
+        });
       }
     }
 
     function closeDragElement() {
       /* stop moving when mouse button is released:*/
+
       document.onmouseup = null;
       document.onmousemove = null;
     }
@@ -47,12 +56,18 @@ function VoteBar() {
   useEffect(() => {
     dragHandle($('#vote-bar-handle'));
   });
+  const calculatedMargin =
+    ((state.movieCustomDetails.personalVote * 2 - 1) / 10) * 196 + 'px';
 
   return (
     <div className="vote-bar-container">
       <div className="vote-bar-outside">
         <div className="vote-bar-inside">
-          <div className="vote-bar-handle" id="vote-bar-handle"></div>
+          <div
+            className="vote-bar-handle"
+            id="vote-bar-handle"
+            style={{ marginLeft: { calculatedMargin } }}
+          ></div>
         </div>
       </div>
     </div>
