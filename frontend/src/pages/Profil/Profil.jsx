@@ -32,9 +32,16 @@ function Profil() {
   const [genres, setGenres] = useState([]);
   const [disabledInput, setDisabledInput] = useState(DEFAULT_INPUT_DISABLED);
 
+  // Récupération des cookies
+  let cookies = document.cookie.split("; ");
+  const cookies_infos = {}
+  cookies.forEach(cookie => {
+    cookies_infos[cookie.split("=")[0]] = cookie.split("=")[1];
+  })
+
   const loadDataFromProfile = () => {
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/users/17`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}/users/${cookies_infos.user_id}`)
       .then((response) => {
         const infos_user = response.data.user[0]
         setFormValues({
@@ -64,7 +71,7 @@ function Profil() {
   const updateProfile = () => {
     const update_body = {...formValues, user_pref_categories: formValues.user_pref_categories.join(',')};
     axios
-      .put(`${import.meta.env.VITE_BACKEND_URL}/users/17`, update_body)
+      .put(`${import.meta.env.VITE_BACKEND_URL}/users/${cookies_infos.user_id}`, update_body)
       .then(() => {
         console.log("Update effectuée avec succès.")
       })
