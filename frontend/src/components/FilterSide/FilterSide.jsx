@@ -1,7 +1,7 @@
 import './FilterSide.css';
 import { useContext, useEffect, useReducer, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import $ from 'jquery';
 import GenreCheckbox from '../GenreCheckbox/GenreCheckbox';
 import { HomeContext, HomeDispatchContext } from '../../contexts/HomeContext';
@@ -32,7 +32,7 @@ function FilterSide() {
           <div className="filterside-hamburger">
             <FontAwesomeIcon
               onClick={handleClickOnHamburger}
-              icon={filterIsOpen ? faXmark : faBars}
+              icon={filterIsOpen ? faChevronUp : faChevronDown}
               size="lg"
             />
           </div>
