@@ -54,4 +54,17 @@ router.delete('/:userId', function (req, res) {
     });
 });
 
+router.put('/:userId', function (req, res) {
+  appDataSource
+    .getRepository(User)
+    .set(req.body)
+    .where(`user_id = ${req.params.userId}`)
+    .then(function () {
+      res.status(204).json({ message: 'User mis à jour.' });
+    })
+    .catch(function () {
+      res.status(500).json({ message: 'Une erreur est survenue lors de la mise à jour du user.' });
+    });
+});
+
 export default router;
