@@ -6,7 +6,17 @@ import RadioOnOff from '../../components/RadioOnOff/RadioOnOff';
 import ButtonOnOff from '../../components/ButtonOnOff/ButtonOnOff';
 import ButtonChoice from '../../components/ButtonChoice/ButtonChoice'
 
+const DEFAULT_FORM_VALUES = {
+  user_email: 'toto2@gmail.com',
+  user_pseudo: 'toto',
+  user_firstname: 'Toto',
+  user_lastname: 'Dupond',
+  user_date_of_birth: '06/03/2003',
+  user_id:8
+};
+
 function Profil() {
+  const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
   const [genres, setGenres] = useState([]);
   const [username, setUsername] = useState("username");
   const [disabledUsername, setDisabledUsername] = useState(true);
@@ -20,6 +30,26 @@ function Profil() {
   const [prefDateMax, setPrefDateMax] = useState("");
   const [prefDate, setPrefDate] = useState(false)
 
+
+  const loadDataFromProfile = () => {
+
+  };
+
+  const updateProfil = (event) => {
+    event.preventDefault();
+    axios
+      .put(`${import.meta.env.VITE_BACKEND_URL}/users/${formValues.user_id}`, formValues)
+      .then(() => {
+        console.log("Update effectuée avec succès.")
+      })
+      .catch((error) => {
+        console.log("Une erreur est survenue lors de l'update.")
+        console.error(error);
+      });
+  }
+
+
+
   // Paramétrer les préférences de tri
   const handleTriClick = (idRadio) => {
     if (triChecked == idRadio) {
@@ -32,10 +62,10 @@ function Profil() {
   // Paramétrer le chargement des genres
   const loadGenres = () => {
     axios
-      .get(`https://api.themoviedb.org/3/genre/movie/list?api_key=522d421671cf75c2cba341597d86403a`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}/categories`)
       .then((response) => {
         // Do something if success
-        setGenres(response.data.genres)
+        setGenres(response.data.categories)
       })
       .catch((error) => {
         // Do something if call failed
@@ -61,19 +91,26 @@ function Profil() {
 
   return (
     <div className="Users-container">
-      <h1><i className="icon-user"></i> Bonjour {username}</h1>
+      <h1><i className="icon-user"></i> Bonjour {formValues.user_pseudo}</h1>
       <div id="profile-container">
         <h2>Mon profil</h2>
         <table id="profile-infos-container">
           <tbody>
           
-            <InputProfile label={"Username"} input={username} setInput={setUsername}
+            <InputProfile label={"Pseudo"} inputName={"user_pseudo"} type={"text"}
+            formValues={formValues} setFormValues={setFormValues}
             disabledInput={disabledUsername}  setDisabledInput={setDisabledUsername}/>
             
-            <InputProfile label={"First name"} input={firstname} setInput={setFirstname}
+            <InputProfile label={"Prénom"} inputName={"user_firstname"} type={"text"}
+            formValues={formValues} setFormValues={setFormValues}
             disabledInput={disabledFirstname}  setDisabledInput={setDisabledFirstname} />
 
-            <InputProfile label={"Last name"} input={lastname} setInput={setLastname}
+            <InputProfile label={"Nom de famille"} inputName={"user_lastname"} type={"text"}
+            formValues={formValues} setFormValues={setFormValues}
+            disabledInput={disabledLastname}  setDisabledInput={setDisabledLastname} />
+
+            <InputProfile label={"Danne de naissance"} inputName={"user_date_of_birth"} type={"date"}
+            formValues={formValues} setFormValues={setFormValues}
             disabledInput={disabledLastname}  setDisabledInput={setDisabledLastname} />
 
           </tbody>
@@ -93,7 +130,7 @@ function Profil() {
         : <p>Seuls les films appartenant aux catégories séléctionnées seront affichés.</p>}
         <div id="profile-genres-container">
           {genres.map((genre) => {
-            return <ButtonChoice key={genre.id} idGenre={genre.id} label={genre.name}
+            return <ButtonChoice key={genre.category_id} idGenre={genre.category_id} label={genre.category_title}
             checkedGenres={checkedGenres} handleButtonClick={handleButtonClick} />
           })}
         </div>
