@@ -16,7 +16,6 @@ function MovieDetails(data) {
   function handleClickOnDetailsCross() {
     dispatch({ type: 'closeDetails' });
   }
-  function handleSliderUpdate() {}
 
   function handleClickOnToSee() {
     dispatch({ type: 'toggleToSee' });
