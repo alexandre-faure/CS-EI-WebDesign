@@ -1,7 +1,7 @@
 import './RadioOnOff.css';
 import ButtonOnOff from '../ButtonOnOff/ButtonOnOff';
 
-function RadioOnOff({ choices, radioChecked, handleRadioClick }) {
+function RadioOnOff({ choices, values, radioChecked, handleRadioClick }) {
 
   return (
     <table>
@@ -12,7 +12,7 @@ function RadioOnOff({ choices, radioChecked, handleRadioClick }) {
               <label>{choice} : </label>
             </td>
             <td>
-              <ButtonOnOff idRadio={key} radioChecked={radioChecked} handleRadioClick={handleRadioClick}/>
+              <ButtonOnOff idRadio={values[key]} radioChecked={radioChecked} handleRadioClick={handleRadioClick}/>
             </td>
           </tr>
         ))}

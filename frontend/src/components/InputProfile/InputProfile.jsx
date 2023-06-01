@@ -1,26 +1,22 @@
 import './InputProfile.css';
 
-function InputProfile({ label, inputName, formValues, setFormValues, disabledInput, setDisabledInput, type }) {
-
- const changeDisabledInput = () => {
-  setDisabledInput(!disabledInput)
- };
+function InputProfile({ label, inputName, formValues, setFormValues, disabledInput, changeDisabledInput, type }) {
 
   return (
     <tr className={label.toLowerCase().replace(" ", "-") + " field-container"}>
       <td className='label-container'>
         <label>{label} : </label>
       </td>
-      <td className={"input-container " + (disabledInput ? "readonly" : "edit")}>
+      <td className={"input-container " + (disabledInput[inputName] ? "readonly" : "edit")}>
         <input id={label.toLowerCase().replace(" ", "-") + "-input"}
         type={type}
         placeholder={'Your ' + label.toLowerCase()}
         value={formValues[inputName]}
-        disabled={disabledInput}
+        disabled={disabledInput[inputName]}
         onChange={event => {
-          setFormValues({...formValues, inputName:event.target.value})}
+          setFormValues({...formValues, [inputName]:event.target.value})}
           }/>
-          <button onClick={changeDisabledInput}><i className={disabledInput ? "icon-pen" : "icon-check"}></i></button>
+          <button onClick={event => {changeDisabledInput(inputName)}}><i className={disabledInput[inputName] ? "icon-pen" : "icon-check"}></i></button>
       </td>
     </tr>
   );

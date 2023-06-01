@@ -14,6 +14,7 @@ function Admin() {
       <div>
         <h2>Gérer les utilisateur.ice.s</h2>
           <UsersTable users={users} onSuccessfulUserDeletion={fetchUsers} />
+          <div>{usersLoadingError}</div>
       </div>
       <CreateUsers onSuccessfulUserCreation={fetchUsers} />
     </div>

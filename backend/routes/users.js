@@ -13,6 +13,20 @@ router.get('/', function (req, res) { // Renvoie tous les users
     });
 });
 
+router.get('/:id_user', function (req, res) { // Renvoie tous les users
+  appDataSource
+    .getRepository(User)
+    .find({
+      where: {
+        user_id: req.params.id_user
+      },
+      take:0
+    })
+    .then(function (user) {
+      res.json({ user: user });
+    });
+});
+
 router.post('/new', function (req, res) { // Crée un user
   const userRepository = appDataSource.getRepository(User);
   const newUser = userRepository.create({
@@ -56,9 +70,11 @@ router.delete('/:userId', function (req, res) {
 
 router.put('/:userId', function (req, res) {
   appDataSource
-    .getRepository(User)
+    .createQueryBuilder()
+    .update(User)
     .set(req.body)
     .where(`user_id = ${req.params.userId}`)
+    .execute()
     .then(function () {
       res.status(204).json({ message: 'User mis à jour.' });
     })

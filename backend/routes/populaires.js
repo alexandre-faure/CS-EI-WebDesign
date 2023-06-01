@@ -34,7 +34,6 @@ router.get('/:id_user', async function (req, res) {
                     complete_movies.push({...movie, infos_user:infos_user[movie.id]})
                 }
                 else{
-                    console.log(movie)
                     complete_movies.push({...movie, infos_user:{status:0,like:0}})
                 }
             });
