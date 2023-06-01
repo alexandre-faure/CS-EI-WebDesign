@@ -27,6 +27,7 @@
   align-items: center;
   height: 200px;
   transition: background-color 0.1s ease;
+  cursor: pointer;
 }
 
 .movie-slider-left-arrow:hover,
@@ -39,20 +40,16 @@
 
   overflow: scroll;
   position: relative;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.movie-slider-card {
-  padding: 0 5px;
+.movie-slider-card-container::-webkit-scrollbar {
+  display: none;
 }
 
 .movie-slider-card-scroller {
   display: flex;
   flex-direction: row;
   position: relative;
-}
-
-.movie-slider-image {
-  height: 300px;
-  width: 200px;
-  object-fit: cover;
 }

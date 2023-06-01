@@ -61,8 +61,11 @@ function MovieSlider(data) {
           id={'movie-slider-card-container-' + data.slider_id}
         >
           <div className="movie-slider-card-scroller">
-            <MovieCard image={image1} />
-            <MovieCard image={image2} />
+            <MovieCard image={image1} title={'test'} />
+            <MovieCard
+              image={image2}
+              title={'Isabelle a les yeux bleus et moi aussi'}
+            />
             <MovieCard image={image3} />
             <MovieCard image={image4} />
             <MovieCard image={image5} />
