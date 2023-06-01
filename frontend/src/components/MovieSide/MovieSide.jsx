@@ -9,12 +9,13 @@ function MovieSide() {
   const state = useContext(HomeContext);
 
   const searchBarIsEmpty = state.searchBar === '';
+  const displayIsDefault = state.activeDisplay === 'default';
 
   return (
     <div className="movie-side-container">
       <WelcomeBox />
 
-      {searchBarIsEmpty ? (
+      {searchBarIsEmpty & displayIsDefault ? (
         state.homeSliders.map((slider) => {
           return (
             <MovieSlider
