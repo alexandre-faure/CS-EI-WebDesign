@@ -227,6 +227,21 @@ async function generateFakeFilms(state, dispatch, sliders) {
   });
 }
 
+function filterByGenre(genres, movieList) {
+  var moviesFiltered = [];
+  var filteredArray = [];
+  for (const movieId in movieList) {
+    filteredArray = movieList[movieId].genre_ids.filter((value) =>
+      genres.includes(value)
+    );
+    if (filteredArray.length === genres.length) {
+      moviesFiltered.push(movieList[movieId]);
+    }
+  }
+
+  return moviesFiltered;
+}
+
 function Home() {
   const [state, dispatch] = useReducer(reducer, {
     genres: {},
@@ -259,6 +274,15 @@ function Home() {
     ],
     activeDisplay: 'default',
   });
+
+  const filteredMovies = filterByGenre(state);
+
+  if (state.homeSliders.length > 0) {
+    const testList = state.homeSliders[0].movies;
+    console.log('test');
+    console.log(testList);
+    console.log(filterByGenre([80, 28, 9648], testList));
+  }
 
   useEffect(() => {
     const sliders = [
