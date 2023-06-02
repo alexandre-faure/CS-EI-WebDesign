@@ -6,7 +6,7 @@ function MovieCard(data) {
   const state = useContext(HomeContext);
   const dispatch = useContext(HomeDispatchContext);
   function handleClickOnMovieCard() {
-    dispatch({ type: 'openDetails' });
+    dispatch({ type: 'openDetails', payload: { movie: data.movie } });
   }
 
   return (

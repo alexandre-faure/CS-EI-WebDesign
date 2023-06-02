@@ -6,7 +6,7 @@
   width: 100%;
   padding: 5px 5px 5px 15px;
   box-sizing: border-box;
-  max-height: calc(1.3em + 10px + 20px);
+  max-height: calc(1.3em + 10px + 15px);
   overflow: hidden;
   position: relative;
 }
@@ -30,6 +30,7 @@
   top: calc(0.65em + 15px);
   right: 20px;
   transform: translateY(-50%);
+  cursor: pointer;
 }
 
 .filterside-pages-container {
@@ -66,14 +67,16 @@
 .filterside-h1 {
   font-size: 130%;
   padding-top: 10px;
+  font-weight: bold;
 }
 
 .filterside-h2 {
   padding-top: 15px;
   padding-bottom: 5px;
   padding-left: 15px;
+  font-weight: bold;
 }
 
 .filterside-genre-list-container {
-  padding-left: 40px;
+  padding-left: 0;
 }

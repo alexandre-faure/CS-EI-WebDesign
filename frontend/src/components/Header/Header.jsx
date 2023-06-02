@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import './Header.css';
-import logo_netflix from './assets/logo_netflix.svg';
+import logo_cinesuggest from './assets/logo_cinesuggest.svg';
 
 const Header = () => {
   return (
     <div className="Header-container">
       <Link className="Link header-logo-container" to="/">
-        <img src={logo_netflix} alt="alt" className="header-logo" />
+        <img src={logo_cinesuggest} alt="alt" className="header-logo" />
       </Link>
       <Link className="Link" to="/">
         Home
