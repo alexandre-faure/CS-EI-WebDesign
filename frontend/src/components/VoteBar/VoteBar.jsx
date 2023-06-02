@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './VoteBar.css';
 import $ from 'jquery';
 import {
@@ -6,9 +6,10 @@ import {
   HomeDispatchContext,
 } from '../../contexts/HomeContext.js';
 
-function VoteBar() {
+function VoteBar(data) {
   const state = useContext(HomeContext);
   const dispatch = useContext(HomeDispatchContext);
+
   function dragHandle(handle) {
     var pos1 = 0,
       pos2 = 0;
@@ -38,10 +39,7 @@ function VoteBar() {
           parseInt(handle.css('marginLeft')) - pos1 + 'px'
         );
 
-        dispatch({
-          type: 'updateVote',
-          payload: { vote: Math.floor((lastValue / 196) * 9 + 1) / 2 },
-        });
+        data.setLiveVote(Math.floor((lastValue / 196) * 9 + 1) / 2);
       }
     }
 
@@ -54,10 +52,17 @@ function VoteBar() {
   }
 
   useEffect(() => {
+    if (state.movieCustomDetails.personalVote === 0) {
+      $('#vote-bar-handle').css('margin-left', '0px');
+      data.setLiveVote(0.5);
+    } else {
+      const vote = state.movieCustomDetails.personalVote;
+      const margin = ((vote * 2 - 1) / 10) * 196 + 'px';
+      $('#vote-bar-handle').css('margin-left', margin);
+    }
     dragHandle($('#vote-bar-handle'));
-  });
-  const calculatedMargin =
-    ((state.movieCustomDetails.personalVote * 2 - 1) / 10) * 196 + 'px';
+  }, []);
+  const calculatedMargin = ((data.liveVote * 2 - 1) / 10) * 196 + 'px';
 
   return (
     <div className="vote-bar-container">
