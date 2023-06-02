@@ -197,6 +197,15 @@
   align-items: center;
 }
 
+.movie-details-slider-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
 .movie-details-year {
   font-style: italic;
   font-size: 110%;
