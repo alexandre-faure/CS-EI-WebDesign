@@ -21,13 +21,15 @@ async function getMovies(url, dates, genres, searchBar, nbMovies, nbPages) {
       // On ajoute les films qui respectent les filtres
       new_movies.data.results.forEach((movie) => {
         // Vérifier la date
-        if (dates.length == 0 | dates.includes(movie.release_date.slice(0,3) + "0")){
+        if (dates.length == 0 | ("release_date" in movie && dates.includes(movie.release_date.slice(0,3) + "0"))){
           // Vérifier les genres
           if (genres.length == 0 | genres.filter(g => movie.genre_ids.includes(parseInt(g))).length == 1){
             // Vérifier la recherche
-            const search_value = toto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-            
-            movies.push(movie)
+            const search_value = searchBar.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            const title_normalized = movie.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            if (searchBar == "" | title_normalized.includes(search_value)){
+              movies.push(movie)
+            }
           }
         }
       })
@@ -108,6 +110,7 @@ router.get('/', async function (req, res) {
     }
 
     const movies = await request(params.filters.dates, params.filters.genres, params.filters.searchBar);
+    
     if (movies) {
         appDataSource
         .getRepository(Movie_User)
