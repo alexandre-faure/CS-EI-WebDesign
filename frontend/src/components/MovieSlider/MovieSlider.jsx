@@ -2,21 +2,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import $ from 'jquery';
-import { useEffect } from 'react';
-import image1 from './test-images/1.jpg';
-import image2 from './test-images/2.jpg';
-import image3 from './test-images/3.jpg';
-import image4 from './test-images/4.jpg';
-import image5 from './test-images/5.jpg';
-import image6 from './test-images/6.jpg';
-import image7 from './test-images/7.jpg';
-import image8 from './test-images/8.jpg';
-import image9 from './test-images/9.jpg';
+import { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 import MovieCard from '../MovieCard/MovieCard';
 
 import './MovieSlider.css';
+import { HomeContext } from '../../contexts/HomeContext';
 
 function MovieSlider(data) {
+  const state = useContext(HomeContext);
+  const [movies, setMovies] = useState([]);
+
   useEffect(() => {
     $('#movie-slider-right-arrow-' + data.slider_id)
       .unbind()
@@ -44,7 +40,35 @@ function MovieSlider(data) {
         }
         card.animate({ scrollLeft: String(newScrollLeft) }, 200);
       });
-  });
+
+    const fetchData = async (slider_id) => {
+      const filters = {
+        genres: [],
+        dates: [],
+        searchBar: 'la la land',
+      };
+      const user_id = state.user_id;
+      const parameters = {
+        sort: slider_id,
+        filters: filters,
+        user_id: user_id,
+      };
+      await axios
+        .get('http://localhost:8000/movies', {
+          params: {
+            settings: JSON.stringify(parameters),
+          },
+        })
+        .then((response) => {
+          setMovies(response.data.results);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      console.log('fetchData');
+    };
+    fetchData('test');
+  }, []);
 
   return (
     <div className="movie-slider-container">
@@ -61,7 +85,7 @@ function MovieSlider(data) {
           id={'movie-slider-card-container-' + data.slider_id}
         >
           <div className="movie-slider-card-scroller">
-            {data.movieList.map((movie) => {
+            {movies.map((movie) => {
               return (
                 <MovieCard
                   movie={movie}
