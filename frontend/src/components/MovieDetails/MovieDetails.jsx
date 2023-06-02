@@ -70,7 +70,7 @@ function MovieDetails(data) {
           <div className="movie-details-description">
             {state.movieDetails.overview}
           </div>
-          <div className="movie-details-row">
+          <div className="movie-details-tmdb-rate-row">
             <div className="movie-details-tmdb-rate">
               <FontAwesomeIcon icon={faStar} />
               <div className="movie-details-tmdb-rate-text">
@@ -81,11 +81,14 @@ function MovieDetails(data) {
                 </span>
               </div>
             </div>
+          </div>
+          <div className="movie-details-slider-row">
             <div className="movie-details-rate-slider-container">
               <VoteBar />
               <div className="movie-details-rate-slider-text">
                 ( {state.movieCustomDetails.personalVote} / 5 )
               </div>
+              <div className="movie-details-rate-button">Voter</div>
             </div>
           </div>
           <div className="movie-details-button-row">
