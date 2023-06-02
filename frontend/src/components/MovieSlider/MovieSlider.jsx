@@ -61,6 +61,7 @@ function MovieSlider(data) {
         })
         .then((response) => {
           setMovies(response.data.results);
+          console.log(response.data.results);
         })
         .catch((error) => {
           console.log(error);
@@ -68,7 +69,7 @@ function MovieSlider(data) {
       console.log('fetchData');
     };
     setMovies(state.homeSliders[0].movies);
-    fetchData('test');
+    fetchData('');
   }, []);
 
   return (
