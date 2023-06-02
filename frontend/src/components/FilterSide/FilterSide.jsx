@@ -46,7 +46,6 @@ function FilterSide() {
             {state.displayOptions.map((display, key) => {
               return (
                 <div
-                  key={key}
                   className={
                     'filterside-page-title ' +
                     (state.activeDisplay === display.id

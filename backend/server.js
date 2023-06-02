@@ -5,10 +5,8 @@ import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
 import categoriesRouter from './routes/categories.js';
 import recommandationsRouter from './routes/recommandations.js';
-import populairesRouter from './routes/populaires.js';
-import noteRouter from './routes/mieux_notes.js';
+import moviessRouter from './routes/movies.js';
 import loginRouter from './routes/login.js';
-import recenceRouter from './routes/recence.js';
 import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js';
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
@@ -29,9 +27,7 @@ appDataSource
     app.use('/users', usersRouter);
     app.use('/categories', categoriesRouter);
     app.use('/recommandation', recommandationsRouter);
-    app.use('/populaires', populairesRouter);
-    app.use('/mieux_notes', noteRouter);
-    app.use('/recence', recenceRouter);
+    app.use('/movies', moviessRouter);
     app.use('/login', loginRouter);
 
     // Register 404 middleware and error handler
