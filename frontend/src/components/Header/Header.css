@@ -7,10 +7,11 @@
   align-items: center;
   padding-left: 20px;
   font-size: 110%;
-  background-color: #237793;
+  background-color: #1c1f25;
   width: 100%;
   height: 50px;
   top: 0;
+  box-shadow: 0px 2px 0.5em rgba(0, 0, 0, 0.6);
 }
 
 .Link {

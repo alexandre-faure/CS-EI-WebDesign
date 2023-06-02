@@ -2,10 +2,29 @@
 .users-table td,
 .users-table th {
   border-collapse: collapse;
-  border: 1px solid grey;
+  margin: 0 auto;
+  background-color: rgb(70, 70, 70);
+  border: 2px solid white;
 }
 
 .users-table td,
 .users-table th {
   padding: 10px;
+}
+
+.delete-button {
+  width: 1.7rem;
+  height: 1.7rem;
+  font-size: 1rem;
+  border-radius: 50%;
+  border: 0;
+  padding-top: 0.2rem;
+  margin-left: calc(50% - 0.85rem);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.delete-button:hover {
+  color: white;
+  background-color: red;
 }
