@@ -68,6 +68,8 @@ router.delete('/:userId', function (req, res) {
     });
 });
 
+
+// Met à jour un user
 router.put('/:userId', function (req, res) {
   appDataSource
     .createQueryBuilder()

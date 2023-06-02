@@ -35,6 +35,7 @@
 
 .vote-bar-handle {
   height: 80%;
+  cursor: pointer;
   aspect-ratio: 1;
   position: relative;
   top: 50%;
