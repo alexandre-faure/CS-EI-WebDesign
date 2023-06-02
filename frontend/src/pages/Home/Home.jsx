@@ -1,4 +1,4 @@
-import { useContext, useEffect, useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import FilterSide from '../../components/FilterSide/FilterSide';
 import MovieSide from '../../components/MovieSide/MovieSide';
 
@@ -8,7 +8,6 @@ import { HomeDispatchContext } from '../../contexts/HomeContext';
 import './Home.css';
 import MovieDetails from '../../components/MovieDetails/MovieDetails';
 import axios from 'axios';
-import { faL } from '@fortawesome/free-solid-svg-icons';
 
 const lalaland = {
   adult: false,
@@ -179,25 +178,33 @@ function reducer(state, action) {
         case 0:
           newState.movieCustomDetails.status = 1;
 
-          return newState;
+          break;
         case 1:
           newState.movieCustomDetails.status = 0;
 
-          return newState;
+          break;
         case 2:
           newState.movieCustomDetails.status = 3;
 
-          return newState;
+          break;
         case 3:
           newState.movieCustomDetails.status = 2;
 
-          return newState;
+          break;
 
         default:
           newState.movieCustomDetails.status = 0;
 
-          return newState;
+          break;
       }
+      sendMovieSettings(
+        newState.user_id,
+        newState.movieDetails.id,
+        'status',
+        newState.movieCustomDetails.status
+      );
+
+      return newState;
 
     case 'toggleSeen':
       newState = JSON.parse(JSON.stringify(state));
@@ -205,25 +212,33 @@ function reducer(state, action) {
         case 0:
           newState.movieCustomDetails.status = 2;
 
-          return newState;
+          break;
         case 1:
           newState.movieCustomDetails.status = 3;
 
-          return newState;
+          break;
         case 2:
           newState.movieCustomDetails.status = 0;
 
-          return newState;
+          break;
         case 3:
           newState.movieCustomDetails.status = 1;
 
-          return newState;
+          break;
 
         default:
           newState.movieCustomDetails.status = 0;
 
-          return newState;
+          break;
       }
+      sendMovieSettings(
+        newState.user_id,
+        newState.movieDetails.id,
+        'status',
+        newState.movieCustomDetails.status
+      );
+
+      return newState;
     case 'updateCategories':
       newState = JSON.parse(JSON.stringify(state));
       newState.categories = action.payload.categories;
@@ -233,11 +248,53 @@ function reducer(state, action) {
     case 'updateVote':
       newState = JSON.parse(JSON.stringify(state));
       newState.movieCustomDetails.like = action.payload.vote;
+      sendMovieSettings(
+        newState.user_id,
+        newState.movieDetails.id,
+        'like',
+        newState.movieCustomDetails.like
+      );
 
       return newState;
 
     default:
       return state;
+  }
+}
+
+async function sendMovieSettings(user_id, movie_id, setting, setting_value) {
+  switch (setting) {
+    case 'status':
+      axios
+        .post('http://localhost:8000', {
+          params: {
+            user_id: user_id,
+            movie_id: movie_id,
+            status: setting_value,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((e) => console.log(e));
+      break;
+    case 'like':
+      axios
+        .post('http://localhost:8000', {
+          params: {
+            user_id: user_id,
+            movie_id: movie_id,
+            like: setting_value,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((e) => console.log(e));
+      break;
+
+    default:
+      break;
   }
 }
 
@@ -333,6 +390,7 @@ function Home() {
       .catch((e) => {
         console.log(e);
       });
+
     generateFakeFilms(state, dispatch, sliders);
   }, []);
 

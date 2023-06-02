@@ -7,6 +7,12 @@
   width: 200px;
   object-fit: cover;
 }
+.moviecard-image-placeholder {
+  height: 300px;
+  width: 200px;
+  background-color: white;
+}
+
 .moviecard-gradient {
   background-image: linear-gradient(
     to bottom,

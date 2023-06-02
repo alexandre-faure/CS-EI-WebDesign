@@ -43,9 +43,9 @@ function MovieSlider(data) {
 
     const fetchData = async (slider_id) => {
       const filters = {
-        genres: [],
-        dates: [],
-        searchBar: '',
+        genres: Object.keys(state.genres),
+        dates: Object.keys(state.dates),
+        searchBar: state.searchBar,
       };
       const user_id = state.user_id;
       const parameters = {
@@ -53,6 +53,7 @@ function MovieSlider(data) {
         filters: filters,
         user_id: user_id,
       };
+      console.log(parameters);
       await axios
         .get('http://localhost:8000/movies', {
           params: {
@@ -67,7 +68,7 @@ function MovieSlider(data) {
         });
     };
     fetchData(data.slider_id);
-  }, []);
+  }, [state.genres, state.searchBar, state.dates]);
 
   return (
     <div className="movie-slider-container">
@@ -91,7 +92,7 @@ function MovieSlider(data) {
                   image={
                     'url(https://image.tmdb.org/t/p/w500' + movie.poster_path
                   }
-                  key={movie.poster_path}
+                  key={movie.title}
                 />
               );
             })}

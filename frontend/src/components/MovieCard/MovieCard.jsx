@@ -11,11 +11,15 @@ function MovieCard(data) {
 
   return (
     <div className="moviecard-container" onClick={handleClickOnMovieCard}>
-      <img
-        className="moviecard-image"
-        src={'https://image.tmdb.org/t/p/w500' + data.movie.poster_path}
-        alt="alt"
-      />
+      {data.movie.poster_path ? (
+        <img
+          className="moviecard-image"
+          src={'https://image.tmdb.org/t/p/w500' + data.movie.poster_path}
+          alt="alt"
+        />
+      ) : (
+        <div className="moviecard-image-placeholder"></div>
+      )}
       <div className="moviecard-gradient"></div>
       <div className="moviecard-title">{data.movie.title}</div>
     </div>
