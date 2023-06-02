@@ -134,13 +134,12 @@ function reducer(state, action) {
 
       newState.movieDetailsIsOpen = true;
       newState.movieDetails = action.payload.movie;
-      if ('custom' in newState.movieDetails) {
-        newState.movieCustomDetails = newState.movieDetails.custom;
+      if ('infos_user' in newState.movieDetails) {
+        newState.movieCustomDetails = newState.movieDetails.infos_user;
       } else {
         newState.movieCustomDetails = {
-          seen: false,
-          toSee: false,
-          personalVote: 0,
+          status: 0,
+          like: 0,
         };
       }
 
@@ -176,23 +175,55 @@ function reducer(state, action) {
 
     case 'toggleToSee':
       newState = JSON.parse(JSON.stringify(state));
-      if (newState.movieCustomDetails.toSee) {
-        newState.movieCustomDetails.toSee = false;
-      } else {
-        newState.movieCustomDetails.toSee = true;
-      }
+      switch (newState.movieCustomDetails.status) {
+        case 0:
+          newState.movieCustomDetails.status = 1;
 
-      return newState;
+          return newState;
+        case 1:
+          newState.movieCustomDetails.status = 0;
+
+          return newState;
+        case 2:
+          newState.movieCustomDetails.status = 3;
+
+          return newState;
+        case 3:
+          newState.movieCustomDetails.status = 2;
+
+          return newState;
+
+        default:
+          newState.movieCustomDetails.status = 0;
+
+          return newState;
+      }
 
     case 'toggleSeen':
       newState = JSON.parse(JSON.stringify(state));
-      if (newState.movieCustomDetails.seen) {
-        newState.movieCustomDetails.seen = false;
-      } else {
-        newState.movieCustomDetails.seen = true;
-      }
+      switch (newState.movieCustomDetails.status) {
+        case 0:
+          newState.movieCustomDetails.status = 2;
 
-      return newState;
+          return newState;
+        case 1:
+          newState.movieCustomDetails.status = 3;
+
+          return newState;
+        case 2:
+          newState.movieCustomDetails.status = 0;
+
+          return newState;
+        case 3:
+          newState.movieCustomDetails.status = 1;
+
+          return newState;
+
+        default:
+          newState.movieCustomDetails.status = 0;
+
+          return newState;
+      }
     case 'updateCategories':
       newState = JSON.parse(JSON.stringify(state));
       newState.categories = action.payload.categories;
@@ -201,7 +232,7 @@ function reducer(state, action) {
 
     case 'updateVote':
       newState = JSON.parse(JSON.stringify(state));
-      newState.movieCustomDetails.personalVote = action.payload.vote;
+      newState.movieCustomDetails.like = action.payload.vote;
 
       return newState;
 
@@ -270,7 +301,7 @@ function Home() {
     dates: {},
     movieDetailsIsOpen: false,
     movieDetails: lalaland,
-    movieCustomDetails: { seen: false, toSee: false, personalVote: 0 },
+    movieCustomDetails: { status: 0, like: 0 },
     homeSliders: [],
     searchBar: '',
     displayOptions: [
@@ -286,10 +317,10 @@ function Home() {
 
   useEffect(() => {
     const sliders = [
-      { title: 'Recommandations', id: 'recommandations' },
-      { title: 'Les mieux notés', id: 'best-note' },
-      { title: 'Populaires', id: 'popular' },
-      { title: 'Les plus récents', id: 'most-recent' },
+      { title: 'Recommandations', slider_id: 'recommandations' },
+      { title: 'Les mieux notés', slider_id: 'best-note' },
+      { title: 'Populaires', slider_id: 'popular' },
+      { title: 'Les plus récents', slider_id: 'most-recent' },
     ];
     axios
       .get('http://localhost:8000/categories')
