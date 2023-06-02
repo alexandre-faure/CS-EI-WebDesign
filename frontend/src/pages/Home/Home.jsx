@@ -327,11 +327,11 @@ async function generateFakeFilms(state, dispatch, sliders) {
 }
 
 async function initializeHome(user_id) {
-  var userSettings;
+  var user;
   await axios
-    .get()
+    .get('http://localhost:8000/users/' + user_id)
     .then((response) => {
-      userSettings = response.data.results;
+      user = response.data.results;
     })
     .catch((e) => {
       console.log(error);
