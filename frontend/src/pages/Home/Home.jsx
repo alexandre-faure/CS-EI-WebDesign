@@ -8,6 +8,101 @@ import { HomeDispatchContext } from '../../contexts/HomeContext';
 import './Home.css';
 import MovieDetails from '../../components/MovieDetails/MovieDetails';
 import axios from 'axios';
+import { faL } from '@fortawesome/free-solid-svg-icons';
+
+const lalaland = {
+  adult: false,
+  backdrop_path: '/qJeU7KM4nT2C1WpOrwPcSDGFUWE.jpg',
+  belongs_to_collection: null,
+  budget: 30000000,
+  genres: [
+    {
+      id: 35,
+      name: 'Comedy',
+    },
+    {
+      id: 18,
+      name: 'Drama',
+    },
+    {
+      id: 10749,
+      name: 'Romance',
+    },
+    {
+      id: 10402,
+      name: 'Music',
+    },
+  ],
+  homepage: 'http://www.lalaland.movie',
+  id: 313369,
+  imdb_id: 'tt3783958',
+  original_language: 'en',
+  original_title: 'La La Land',
+  overview:
+    'Mia, an aspiring actress, serves lattes to movie stars in between auditions and Sebastian, a jazz musician, scrapes by playing cocktail party gigs in dingy bars, but as success mounts they are faced with decisions that begin to fray the fragile fabric of their love affair, and the dreams they worked so hard to maintain in each other threaten to rip them apart.',
+  popularity: 26.045,
+  poster_path: '/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg',
+  production_companies: [
+    {
+      id: 491,
+      logo_path: '/5LvDUt3KmvRnXQ4NrdWJYHeuA8J.png',
+      name: 'Summit Entertainment',
+      origin_country: 'US',
+    },
+    {
+      id: 33681,
+      logo_path: '/dHx2nsV9AC7IBlKN2dk1FDImvOz.png',
+      name: 'Black Label Media',
+      origin_country: 'US',
+    },
+    {
+      id: 10161,
+      logo_path: null,
+      name: 'Gilbert Films',
+      origin_country: 'US',
+    },
+    {
+      id: 53247,
+      logo_path: null,
+      name: 'Impostor Pictures',
+      origin_country: 'US',
+    },
+    {
+      id: 2527,
+      logo_path: '/osO7TGmlRMistSQ5JZusPhbKUHk.png',
+      name: 'Marc Platt Productions',
+      origin_country: 'US',
+    },
+    {
+      id: 1632,
+      logo_path: '/cisLn1YAUuptXVBa0xjq7ST9cH0.png',
+      name: 'Lionsgate',
+      origin_country: 'US',
+    },
+  ],
+  production_countries: [
+    {
+      iso_3166_1: 'US',
+      name: 'United States of America',
+    },
+  ],
+  release_date: '2016-11-29',
+  revenue: 447407695,
+  runtime: 129,
+  spoken_languages: [
+    {
+      english_name: 'English',
+      iso_639_1: 'en',
+      name: 'English',
+    },
+  ],
+  status: 'Released',
+  tagline: "Here's to the fools who dream.",
+  title: 'La La Land',
+  video: false,
+  vote_average: 7.892,
+  vote_count: 15270,
+};
 
 function reducer(state, action) {
   var newState;
@@ -21,10 +116,20 @@ function reducer(state, action) {
       }
 
       return newState;
+    case 'toggleDate':
+      newState = JSON.parse(JSON.stringify(state));
+      if (newState.dates[action.payload.dateId]) {
+        delete newState.dates[action.payload.dateId];
+      } else {
+        newState.dates[action.payload.dateId] = true;
+      }
+
+      return newState;
     case 'openDetails':
       newState = JSON.parse(JSON.stringify(state));
 
       newState.movieDetailsIsOpen = true;
+      newState.movieDetails = action.payload.movie;
 
       return newState;
     case 'closeDetails':
@@ -54,6 +159,38 @@ function reducer(state, action) {
     case 'displayUpdate':
       newState = JSON.parse(JSON.stringify(state));
       newState.activeDisplay = action.payload.id;
+
+      return newState;
+
+    case 'toggleToSee':
+      newState = JSON.parse(JSON.stringify(state));
+      if (newState.movieCustomDetails.toSee) {
+        newState.movieCustomDetails.toSee = false;
+      } else {
+        newState.movieCustomDetails.toSee = true;
+      }
+      console.log('toggleToSee');
+
+      return newState;
+
+    case 'toggleSeen':
+      newState = JSON.parse(JSON.stringify(state));
+      if (newState.movieCustomDetails.seen) {
+        newState.movieCustomDetails.seen = false;
+      } else {
+        newState.movieCustomDetails.seen = true;
+      }
+
+      return newState;
+    case 'updateCategories':
+      newState = JSON.parse(JSON.stringify(state));
+      newState.categories = action.payload.categories;
+
+      return newState;
+
+    case 'updateVote':
+      newState = JSON.parse(JSON.stringify(state));
+      newState.movieCustomDetails.personalVote = action.payload.vote;
 
       return newState;
 
@@ -90,26 +227,81 @@ async function generateFakeFilms(state, dispatch, sliders) {
   });
 }
 
+function filterByGenre(genres, movieList) {
+  var moviesFiltered = [];
+  var filteredArray = [];
+  for (const movieId in movieList) {
+    filteredArray = movieList[movieId].genre_ids.filter((value) =>
+      genres.includes(value)
+    );
+    if (filteredArray.length === genres.length) {
+      moviesFiltered.push(movieList[movieId]);
+    }
+  }
+
+  return moviesFiltered;
+}
+
 function Home() {
   const [state, dispatch] = useReducer(reducer, {
     genres: {},
+    categories: [],
+    dateCategories: [
+      { title: '1920-1930', id: '1920' },
+      { title: '1930-1940', id: '1930' },
+      { title: '1940-1950', id: '1940' },
+      { title: '1950-1960', id: '1950' },
+      { title: '1960-1970', id: '1960' },
+      { title: '1970-1980', id: '1970' },
+      { title: '1980-1990', id: '1980' },
+      { title: '1990-2000', id: '1990' },
+      { title: '2000-2010', id: '2000' },
+      { title: '2010-2020', id: '2010' },
+      { title: '2020-2030', id: '2020' },
+    ],
+    dates: {},
     movieDetailsIsOpen: false,
-    movieDetails: {},
+    movieDetails: lalaland,
+    movieCustomDetails: { seen: false, toSee: false, personalVote: 5 },
     homeSliders: [],
     searchBar: '',
     displayOptions: [
       { title: 'Par défaut', id: 'default' },
       { title: 'Recommandations', id: 'recommandations' },
+      { title: 'Les mieux notés', id: 'best-note' },
       { title: 'Populaires', id: 'popular' },
+      { title: 'Les plus récents', id: 'most-recent' },
     ],
     activeDisplay: 'default',
   });
 
+  const filteredMovies = filterByGenre(state);
+
+  if (state.homeSliders.length > 0) {
+    const testList = state.homeSliders[0].movies;
+    console.log('test');
+    console.log(testList);
+    console.log(filterByGenre([80, 28, 9648], testList));
+  }
+
   useEffect(() => {
     const sliders = [
-      { title: 'Toto', id: 'pour-vous' },
-      { title: 'Populaire', id: 'populaire' },
+      { title: 'Recommandations', id: 'recommandations' },
+      { title: 'Les mieux notés', id: 'best-note' },
+      { title: 'Populaires', id: 'popular' },
+      { title: 'Les plus récents', id: 'most-recent' },
     ];
+    axios
+      .get('http://localhost:8000/categories')
+      .then((res) => {
+        dispatch({
+          type: 'updateCategories',
+          payload: { categories: res.data.categories },
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
     generateFakeFilms(state, dispatch, sliders);
   }, []);
 
