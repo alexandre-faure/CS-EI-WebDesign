@@ -266,7 +266,7 @@ async function sendMovieSettings(user_id, movie_id, setting, setting_value) {
   switch (setting) {
     case 'status':
       axios
-        .post('http://localhost:8000', {
+        .post('http://localhost:8000/movie_user', {
           params: {
             user_id: user_id,
             movie_id: movie_id,
@@ -280,11 +280,11 @@ async function sendMovieSettings(user_id, movie_id, setting, setting_value) {
       break;
     case 'like':
       axios
-        .post('http://localhost:8000', {
+        .post('http://localhost:8000/movie_user', {
           params: {
             user_id: user_id,
             movie_id: movie_id,
-            like: setting_value,
+            vote: setting_value,
           },
         })
         .then((response) => {
@@ -339,6 +339,11 @@ async function initializeHome(user_id) {
 }
 
 function Home() {
+  const cookies = document.cookie.split('; ');
+  const cookies_infos = {};
+  cookies.forEach((cookie) => {
+    cookies_infos[cookie.split('=')[0]] = cookie.split('=')[1];
+  });
   const [state, dispatch] = useReducer(reducer, {
     genres: {},
     categories: [],
@@ -369,7 +374,7 @@ function Home() {
       { title: 'Les plus récents', id: 'most-recent' },
     ],
     activeDisplay: 'default',
-    user_id: 'test',
+    user_id: parseInt(cookies_infos.user_id),
   });
 
   useEffect(() => {
