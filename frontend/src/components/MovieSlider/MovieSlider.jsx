@@ -53,7 +53,6 @@ function MovieSlider(data) {
         filters: filters,
         user_id: user_id,
       };
-      console.log(parameters);
       await axios
         .get('http://localhost:8000/movies', {
           params: {
@@ -68,7 +67,7 @@ function MovieSlider(data) {
         });
     };
     fetchData(data.slider_id);
-  }, [state.genres, state.searchBar, state.dates]);
+  }, [state.genres, state.searchBar, state.dates, state.movieDetailsIsOpen]);
 
   return (
     <div className="movie-slider-container">

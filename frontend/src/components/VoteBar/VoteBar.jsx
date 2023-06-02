@@ -26,21 +26,6 @@ function VoteBar(data) {
       document.onmousemove = elementDrag;
     }
 
-    function getGradient(pos){
-      if (pos < 50){
-        'linear-gradient(to right, #63050a, rgb(255,255,0))'
-      }
-      else if (pos < 100){
-        'linear-gradient(to right, #63050a, rgb(255,255,0), rgb(0,255,0))'
-      }
-      else if (pos < 150){
-        'linear-gradient(to right, #63050a, rgb(255,255,0))'
-      }
-      else {
-        'linear-gradient(to right, #63050a, rgb(255,255,0), rgb(0,255,0))'
-      }
-    }
-
     function elementDrag(e) {
       e = e || window.event;
       e.preventDefault();
@@ -53,21 +38,6 @@ function VoteBar(data) {
           'margin-left',
           parseInt(handle.css('marginLeft')) - pos1 + 'px'
         );
-        
-        $("#vote-bar-inside").css(
-          'background-image',
-          (newValue < 50 ?
-            'linear-gradient(to right, #63050a, rgb(255,255,0))'
-          : (newValue < 100 ?
-            'linear-gradient(to right, #63050a, rgb(255,255,0), rgb(0,255,0))'
-          : (newValue < 150 ?
-            'linear-gradient(to right, #63050a, rgb(255,255,0))'
-          :
-            'linear-gradient(to right, #63050a, rgb(150,150,0), rgb(0,100,0))'
-          )))
-        )
-
-        console.log(getGradient(newValue))
 
         data.setLiveVote(Math.floor((lastValue / 196) * 9 + 1) / 2);
       }
