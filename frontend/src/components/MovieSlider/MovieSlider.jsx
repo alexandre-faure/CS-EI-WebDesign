@@ -67,6 +67,7 @@ function MovieSlider(data) {
         });
       console.log('fetchData');
     };
+    setMovies(state.homeSliders[0].movies);
     fetchData('test');
   }, []);
 

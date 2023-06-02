@@ -5,7 +5,7 @@ import {
   faCirclePlus,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { faCircle, faStar } from '@fortawesome/free-solid-svg-icons';
 import { HomeContext, HomeDispatchContext } from '../../contexts/HomeContext';
 import VoteBar from '../VoteBar/VoteBar';
@@ -13,6 +13,9 @@ import VoteBar from '../VoteBar/VoteBar';
 function MovieDetails(data) {
   const state = useContext(HomeContext);
   const dispatch = useContext(HomeDispatchContext);
+  const [liveVote, setLiveVote] = useState(
+    state.movieCustomDetails.personalVote
+  );
   function handleClickOnDetailsCross() {
     dispatch({ type: 'closeDetails' });
   }
@@ -23,6 +26,15 @@ function MovieDetails(data) {
 
   function handleClickOnSeen() {
     dispatch({ type: 'toggleSeen' });
+  }
+
+  function handleClickOnVoteButton() {
+    dispatch({
+      type: 'updateVote',
+      payload: {
+        vote: liveVote,
+      },
+    });
   }
 
   const newVote = String(state.movieDetails.vote_average / 2).substring(0, 3);
@@ -72,9 +84,10 @@ function MovieDetails(data) {
           </div>
           <div className="movie-details-tmdb-rate-row">
             <div className="movie-details-tmdb-rate">
+              <div className="movie-details-tmdb-rate-title">Note TMDB :</div>
               <FontAwesomeIcon icon={faStar} />
+              {newVote} / 5{' '}
               <div className="movie-details-tmdb-rate-text">
-                {newVote} / 5{' '}
                 <span className="movie-details-vote-count">
                   {' '}
                   ({state.movieDetails.vote_count})
@@ -82,13 +95,32 @@ function MovieDetails(data) {
               </div>
             </div>
           </div>
+
+          {state.movieCustomDetails.personalVote > 0 ? (
+            <div className="movie-details-personal-rate-row">
+              <div className="movie-details-personal-rate">
+                <div className="movie-details-personal-rate-title">
+                  Ma note :
+                </div>
+                <FontAwesomeIcon icon={faStar} />
+                {state.movieCustomDetails.personalVote} / 5{' '}
+              </div>
+            </div>
+          ) : (
+            ''
+          )}
           <div className="movie-details-slider-row">
             <div className="movie-details-rate-slider-container">
-              <VoteBar />
+              <VoteBar liveVote={liveVote} setLiveVote={setLiveVote} />
               <div className="movie-details-rate-slider-text">
-                ( {state.movieCustomDetails.personalVote} / 5 )
+                ( {liveVote} / 5 )
               </div>
-              <div className="movie-details-rate-button">Voter</div>
+              <div
+                className="movie-details-rate-button"
+                onClick={handleClickOnVoteButton}
+              >
+                Voter
+              </div>
             </div>
           </div>
           <div className="movie-details-button-row">
