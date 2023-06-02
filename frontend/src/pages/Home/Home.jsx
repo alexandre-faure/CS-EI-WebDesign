@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useContext, useEffect, useReducer } from 'react';
 import FilterSide from '../../components/FilterSide/FilterSide';
 import MovieSide from '../../components/MovieSide/MovieSide';
 
@@ -107,6 +107,10 @@ const lalaland = {
 function reducer(state, action) {
   var newState;
   switch (action.type) {
+    case 'initializeHome':
+      newState = JSON.parse(JSON.stringify(state));
+
+      return newState;
     case 'toggleGenre':
       newState = JSON.parse(JSON.stringify(state));
       if (newState.genres[action.payload.genreId]) {
@@ -227,6 +231,18 @@ async function generateFakeFilms(state, dispatch, sliders) {
   });
 }
 
+async function initializeHome(user_id) {
+  var userSettings;
+  await axios
+    .get()
+    .then((response) => {
+      userSettings = response.data.results;
+    })
+    .catch((e) => {
+      console.log(error);
+    });
+}
+
 function filterByGenre(genres, movieList) {
   var moviesFiltered = [];
   var filteredArray = [];
@@ -273,6 +289,7 @@ function Home() {
       { title: 'Les plus récents', id: 'most-recent' },
     ],
     activeDisplay: 'default',
+    user_id: 'test',
   });
 
   const filteredMovies = filterByGenre(state);
