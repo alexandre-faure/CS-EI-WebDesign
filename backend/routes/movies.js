@@ -27,12 +27,7 @@ async function getMovies(url, dates, genres, searchBar, nbMovies, nbPages) {
             dates.includes(movie.release_date.slice(0, 3) + '0'))
         ) {
           // Vérifier les genres
-          if (
-            (genres.length == 0) |
-            (genres.filter((g) => movie.genre_ids.includes(parseInt(g)))
-              .length ==
-              1)
-          ) {
+          if (genres.length == 0 | ("genres" in movie && genres.filter(g => movie.genre_ids.includes(parseInt(g))).length == 1)){
             // Vérifier la recherche
             const search_value = searchBar
               .normalize('NFD')
@@ -155,25 +150,24 @@ router.get('/', async function (req, res) {
 
   let request = null;
 
-  // On récupère la bonne fonction pour fair l'appel à TMDB
-  switch (params.sort) {
-    case 'recommandations':
-      request = async (dates, genres, searchBar) =>
-        getFilmsRecommandations(params.user_id, dates, genres, searchBar);
-      break;
-    case 'best-note':
-      request = getFilmsMieuxNotes;
-      break;
-    case 'popular':
-      request = getFilmsPopulaires;
-      break;
-    case 'most-recent':
-      request = getFilmsRecence;
-      break;
-    default:
-      res.JSON('Erreur');
-      break;
-  }
+    // On récupère la bonne fonction pour fair l'appel à TMDB
+    switch (params.sort){
+      case 'recommandations':
+        request = async (dates, genres, searchBar) => getFilmsRecommandations(params.user_id, dates, genres, searchBar);
+        break;
+      case 'best-note':
+        request = getFilmsMieuxNotes;
+        break;
+      case 'popular':
+        request = getFilmsPopulaires;
+        break;
+      case 'most-recent':
+        request = getFilmsRecence;
+        break;
+      default:
+        res.JSON({"erreur":"Erreur"})
+        break;
+    }
 
   const movies = await request(
     params.filters.dates,
@@ -181,34 +175,26 @@ router.get('/', async function (req, res) {
     params.filters.searchBar
   );
 
-  if (movies) {
-    appDataSource
-      .getRepository(Movie_User)
-      .findBy({ movie_user_id_user: params.user_id })
-      .then(function (movie_user) {
-        // Récupérations des caractéristiques propres à user
-        const infosByMovie = {};
-        movie_user.map((row) => {
-          infosByMovie[row.movie_user_id_movie] = {
-            status: row.movie_user_status,
-            like: row.movie_user_like,
-          };
-        });
-        // Ajout des caractéristiques propres à user pour chaque film
-        const complete_movies = [];
-        movies.forEach((movie) => {
-          if (movie.id in infosByMovie) {
-            complete_movies.push({
-              ...movie,
-              infos_user: infosByMovie[movie.id],
+    if (movies) {
+        appDataSource
+        .getRepository(Movie_User)
+        .findBy({movie_user_id_user: params.user_id})
+        .then(function (movie_user) {
+            // Récupérations des caractéristiques propres à user
+            let infosByMovie = {};
+            movie_user.map((row) => {
+                infosByMovie[row.movie_user_id_movie] = {status:row.movie_user_status, like:row.movie_user_like}
+            })
+            // Ajout des caractéristiques propres à user pour chaque film
+            const complete_movies = [];
+            movies.forEach(movie => {
+                if (movie.id in infosByMovie){
+                    complete_movies.push({...movie, infos_user:infosByMovie[movie.id]})
+                }
+                else{
+                    complete_movies.push({...movie, infos_user:{status:0,like:0}})
+                }
             });
-          } else {
-            complete_movies.push({
-              ...movie,
-              infos_user: { status: 0, like: 0 },
-            });
-          }
-        });
 
         res.json({ movies: complete_movies });
       })

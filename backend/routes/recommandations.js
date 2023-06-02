@@ -74,14 +74,14 @@ router.get('/:user_id/:nb', function (req, res) { // Renvoie tous les users
       }
       });
 
-      console.log(infos_user)
-
       // Calculer la similitude entre l'utilisateur choisi et les autres
       const characteristics = {};
-      if (!id_user in dataPerUser){
+      if (!(id_user in dataPerUser)){
         res.json({movies:{}})
+        return;
       }
     const ratedMovies = dataPerUser[id_user];
+    console.log(ratedMovies)
     const moyX = Object.values(ratedMovies).reduce((acc, val) => acc + val, 0) / Object.keys(ratedMovies).length;
     characteristics[id_user] = {moy:moyX}
     delete dataPerUser[id_user];
