@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useContext, useEffect, useReducer } from 'react';
 import FilterSide from '../../components/FilterSide/FilterSide';
 import MovieSide from '../../components/MovieSide/MovieSide';
 
@@ -107,6 +107,10 @@ const lalaland = {
 function reducer(state, action) {
   var newState;
   switch (action.type) {
+    case 'initializeHome':
+      newState = JSON.parse(JSON.stringify(state));
+
+      return newState;
     case 'toggleGenre':
       newState = JSON.parse(JSON.stringify(state));
       if (newState.genres[action.payload.genreId]) {
@@ -130,6 +134,15 @@ function reducer(state, action) {
 
       newState.movieDetailsIsOpen = true;
       newState.movieDetails = action.payload.movie;
+      if ('custom' in newState.movieDetails) {
+        newState.movieCustomDetails = newState.movieDetails.custom;
+      } else {
+        newState.movieCustomDetails = {
+          seen: false,
+          toSee: false,
+          personalVote: 0,
+        };
+      }
 
       return newState;
     case 'closeDetails':
@@ -152,7 +165,6 @@ function reducer(state, action) {
     case 'searchUpdate':
       newState = JSON.parse(JSON.stringify(state));
       newState.searchBar = action.payload.searchBar;
-      console.log(newState.searchBar);
 
       return newState;
 
@@ -169,7 +181,6 @@ function reducer(state, action) {
       } else {
         newState.movieCustomDetails.toSee = true;
       }
-      console.log('toggleToSee');
 
       return newState;
 
@@ -227,19 +238,16 @@ async function generateFakeFilms(state, dispatch, sliders) {
   });
 }
 
-function filterByGenre(genres, movieList) {
-  var moviesFiltered = [];
-  var filteredArray = [];
-  for (const movieId in movieList) {
-    filteredArray = movieList[movieId].genre_ids.filter((value) =>
-      genres.includes(value)
-    );
-    if (filteredArray.length === genres.length) {
-      moviesFiltered.push(movieList[movieId]);
-    }
-  }
-
-  return moviesFiltered;
+async function initializeHome(user_id) {
+  var userSettings;
+  await axios
+    .get()
+    .then((response) => {
+      userSettings = response.data.results;
+    })
+    .catch((e) => {
+      console.log(error);
+    });
 }
 
 function Home() {
@@ -262,7 +270,7 @@ function Home() {
     dates: {},
     movieDetailsIsOpen: false,
     movieDetails: lalaland,
-    movieCustomDetails: { seen: false, toSee: false, personalVote: 5 },
+    movieCustomDetails: { seen: false, toSee: false, personalVote: 0 },
     homeSliders: [],
     searchBar: '',
     displayOptions: [
@@ -273,16 +281,8 @@ function Home() {
       { title: 'Les plus récents', id: 'most-recent' },
     ],
     activeDisplay: 'default',
+    user_id: 'test',
   });
-
-  const filteredMovies = filterByGenre(state);
-
-  if (state.homeSliders.length > 0) {
-    const testList = state.homeSliders[0].movies;
-    console.log('test');
-    console.log(testList);
-    console.log(filterByGenre([80, 28, 9648], testList));
-  }
 
   useEffect(() => {
     const sliders = [
