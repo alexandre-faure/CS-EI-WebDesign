@@ -121,7 +121,6 @@ function MovieDetails(data) {
               >
                 Voter
               </div>
-              <div className="movie-details-rate-button">Voter</div>
             </div>
           </div>
           <div className="movie-details-button-row">
