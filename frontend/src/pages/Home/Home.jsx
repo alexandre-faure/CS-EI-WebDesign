@@ -134,6 +134,11 @@ function reducer(state, action) {
 
       newState.movieDetailsIsOpen = true;
       newState.movieDetails = action.payload.movie;
+      if ('custom' in newState.movieDetails) {
+        newState.movieCustomDetails = newState.movieDetails.custom;
+      } else {
+        newState.moviecustom;
+      }
 
       return newState;
     case 'closeDetails':
