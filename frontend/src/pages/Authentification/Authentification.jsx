@@ -54,7 +54,11 @@ function Authentification() {
 
     return (
             <div>
+<<<<<<< HEAD
               <h1 className = 'h1auth'>Bienvenue sur "Ma Filmothéque"</h1> 
+=======
+              <h1 className = 'h1auth'>Bienvenue sur</h1> 
+>>>>>>> bdb7aee (vfsv)
                 <form className="centered" onSubmit={login}>
                     <h2 className = 'h2auth'>Veuillez vous identifier</h2>
                         <div className="group">
