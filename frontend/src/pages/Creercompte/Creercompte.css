@@ -148,6 +148,18 @@
 
 
 
+  .connexion {
+    color: darkgrey;
+    font-size: 15px;
+    float: left;
+    float: bottom;
+    padding: 25px 0px;
+}
+
+.connexion:hover {
+  color:#2196f3;
+  cursor: pointer;
+}
 
 /* LES TITRES */
 
@@ -217,7 +229,7 @@
   /* Image */
 
 .imgcc {
-  width : 80% ;
+  width : 70% ;
   display : block;
   margin-left: auto;
   margin-right: auto;
