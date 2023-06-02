@@ -45,7 +45,7 @@ function MovieSlider(data) {
       const filters = {
         genres: [],
         dates: [],
-        searchBar: 'la la land',
+        searchBar: '',
       };
       const user_id = state.user_id;
       const parameters = {
@@ -60,16 +60,13 @@ function MovieSlider(data) {
           },
         })
         .then((response) => {
-          setMovies(response.data.results);
-          console.log(response.data.results);
+          setMovies(response.data.movies);
         })
         .catch((error) => {
           console.log(error);
         });
-      console.log('fetchData');
     };
-    setMovies(state.homeSliders[0].movies);
-    fetchData('');
+    fetchData(data.slider_id);
   }, []);
 
   return (

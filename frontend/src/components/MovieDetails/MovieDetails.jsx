@@ -5,7 +5,7 @@ import {
   faCirclePlus,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { faCircle, faStar } from '@fortawesome/free-solid-svg-icons';
 import { HomeContext, HomeDispatchContext } from '../../contexts/HomeContext';
 import VoteBar from '../VoteBar/VoteBar';
@@ -13,9 +13,8 @@ import VoteBar from '../VoteBar/VoteBar';
 function MovieDetails(data) {
   const state = useContext(HomeContext);
   const dispatch = useContext(HomeDispatchContext);
-  const [liveVote, setLiveVote] = useState(
-    state.movieCustomDetails.personalVote
-  );
+  const [liveVote, setLiveVote] = useState(state.movieCustomDetails.like);
+
   function handleClickOnDetailsCross() {
     dispatch({ type: 'closeDetails' });
   }
@@ -38,8 +37,8 @@ function MovieDetails(data) {
   }
 
   const newVote = String(state.movieDetails.vote_average / 2).substring(0, 3);
-  const filmIsSeen = state.movieCustomDetails.seen;
-  const filmIsToSee = state.movieCustomDetails.toSee;
+  const filmIsSeen = state.movieCustomDetails.status >= 2;
+  const filmIsToSee = state.movieCustomDetails.status % 2 === 1;
 
   return (
     <div
@@ -96,14 +95,14 @@ function MovieDetails(data) {
             </div>
           </div>
 
-          {state.movieCustomDetails.personalVote > 0 ? (
+          {state.movieCustomDetails.like > 0 ? (
             <div className="movie-details-personal-rate-row">
               <div className="movie-details-personal-rate">
                 <div className="movie-details-personal-rate-title">
                   Ma note :
                 </div>
                 <FontAwesomeIcon icon={faStar} />
-                {state.movieCustomDetails.personalVote} / 5{' '}
+                {state.movieCustomDetails.like} / 5{' '}
               </div>
             </div>
           ) : (
