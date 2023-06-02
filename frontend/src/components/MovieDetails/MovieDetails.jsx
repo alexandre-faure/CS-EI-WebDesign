@@ -35,6 +35,7 @@ function MovieDetails(data) {
       style={{ display: state.movieDetailsIsOpen ? 'flex' : 'none' }}
       onClick={handleClickOnDetailsCross}
     >
+      {state.movieDetailsIsOpen && <style>{`body{overflow-y: hidden}`}</style>}
       <div
         className="movie-details-card"
         onClick={(e) => {

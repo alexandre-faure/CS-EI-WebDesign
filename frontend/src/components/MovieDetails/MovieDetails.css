@@ -16,7 +16,7 @@
 .movie-details-card {
   width: calc(100% - 40px);
   min-width: 370px;
-  background-color: rgb(29, 53, 87);
+  background-color: #1c1f25;
   position: relative;
   display: flex;
   flex-direction: row;
