@@ -137,11 +137,15 @@ function reducer(state, action) {
       if ('custom' in newState.movieDetails) {
         newState.movieCustomDetails = newState.movieDetails.custom;
       } else {
+<<<<<<< HEAD
         newState.movieCustomDetails = {
           seen: false,
           toSee: false,
           personalVote: 0,
         };
+=======
+        newState.moviecustom;
+>>>>>>> 57e56ae (Home update)
       }
 
       return newState;
