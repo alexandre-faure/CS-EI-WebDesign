@@ -52,11 +52,11 @@ function VoteBar(data) {
   }
 
   useEffect(() => {
-    if (state.movieCustomDetails.personalVote === 0) {
+    if (state.movieCustomDetails.like === 0) {
       $('#vote-bar-handle').css('margin-left', '0px');
       data.setLiveVote(0.5);
     } else {
-      const vote = state.movieCustomDetails.personalVote;
+      const vote = state.movieCustomDetails.like;
       const margin = ((vote * 2 - 1) / 10) * 196 + 'px';
       $('#vote-bar-handle').css('margin-left', margin);
     }
