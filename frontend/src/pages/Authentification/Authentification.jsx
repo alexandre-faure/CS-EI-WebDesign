@@ -2,6 +2,7 @@ import './Authentification.css';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
 import { useEffect, useState } from 'react';
+import CineSuggest from './CineSuggest.svg'
 
 const DEFAULT_FORM_VALUES = {
     user_email: '',
@@ -56,6 +57,7 @@ function Authentification() {
             <div>
               <h1 className = 'h1auth'>Bienvenue sur</h1> 
                 <form className="centered" onSubmit={login}>
+                <img className = 'imgauth' src={CineSuggest}/>
                     <h2 className = 'h2auth'>Veuillez vous identifier</h2>
                         <div className="group">
                             <input className = 'inputauth' id="email" type="text" required="required"

@@ -121,7 +121,8 @@ function Creercompte() {
                         </div>
                         <div className="divbuttoncc">
                             <button className = 'buttoncc' type="submit"><span>Créer mon compte</span></button>
-                        </div>  
+                        </div> 
+                        <a className = 'connexion' href='/auth'>J'ai déjà un compte</a>  
                     </form>
                     {userCreationState !== null && (<div>{userCreationState}</div>)}
                 </div> 
