@@ -15,26 +15,42 @@ async function getDetailsFilm(idFilm) {
     }
   }
 
-async function getDetailsFilms(listeIdFilms, infos_user) {
+async function getDetailsFilms(listeIdFilms, infos_user, dates, genres, searchBar, nbMovies) {
     const films = [];
+    let i = 0;
 
-    for (const idFilm of listeIdFilms) {
-        const detailsFilm = await getDetailsFilm(idFilm);
-        if (detailsFilm) {
-            if (idFilm in infos_user){
-                detailsFilm.infos_user = infos_user[idFilm];
+    while (i < listeIdFilms.length & films.length < nbMovies){
+      const idFilm = listeIdFilms[i];
+      const movie = await getDetailsFilm(idFilm);
+
+      if (movie) {
+          // Vérifier la date
+        if (dates.length == 0 | ("release_date" in movie && dates.includes(movie.release_date.slice(0,3) + "0"))){
+          // Vérifier les genres
+          if (genres.length == 0 | genres.filter(g => movie.genre_ids.includes(parseInt(g))).length == 1){
+            // Vérifier la recherche
+            const search_value = searchBar.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            const title_normalized = movie.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            if (searchBar == "" | title_normalized.includes(search_value)){
+              // Ajout des caractéristiques
+              if (idFilm in infos_user){
+                movie.infos_user = infos_user[idFilm];
+              }
+              else{
+                movie.infos_user = {status:0, like:0};
+              }
+              films.push(movie);
             }
-            else{
-                detailsFilm.infos_user = {status:0, like:0};
-            }
-            films.push(detailsFilm);
+          }
         }
+      }
     }
-
     return films;
 }
 
 router.get('/:user_id/:nb', function (req, res) { // Renvoie tous les users
+  const params = JSON.parse(req.query.settings);
+
   appDataSource
     .getRepository(Movie_User)
     .find({})
@@ -120,10 +136,10 @@ router.get('/:user_id/:nb', function (req, res) { // Renvoie tous les users
         movie_pertinence[key] = moyX + pertinence/somme_sim;
       })
 
-      const list_id_sims = Object.entries(movie_pertinence).sort(([, valueA], [, valueB]) => valueB - valueA).slice(0, req.params.nb);
+      const list_id_sims = Object.entries(movie_pertinence).sort(([, valueA], [, valueB]) => valueB - valueA);
       const list_id = list_id_sims.map(([first_elem]) => first_elem);
 
-      getDetailsFilms(list_id, infos_user)
+      getDetailsFilms(list_id, infos_user, req.params.nb)
         .then((response) => {
             res.json({movies: response});
         })

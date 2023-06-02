@@ -46,9 +46,21 @@ async function getMovies(url, dates, genres, searchBar, nbMovies, nbPages) {
 
 
 async function getFilmsRecommandations(user_id, dates, genres, searchBar) {
+  console.log(user_id)
+  console.log(dates)
+  console.log(genres)
+  console.log(searchBar)
   try {
-    const response = await axios.get(`http://localhost:8000/recommandation/${user_id}/20`);
-    return response.data;
+    const response = await axios.get(
+      `http://localhost:8000/recommandation/${user_id}/${nbMovies}`,
+      {params: {
+        settings : JSON.stringify({
+          'dates':dates,
+          'genres':genres,
+          'searchBar':searchBar
+        })
+      }});
+    return response;
   } catch (error) {
     console.error(`Erreur lors de la récupération des détails des films populaires`);
     return null;
@@ -68,7 +80,7 @@ async function getFilmsPopulaires(dates, genres, searchBar) {
 async function getFilmsRecence(dates, genres, searchBar) {
   try {
     const response = await getMovies(`https://api.themoviedb.org/3/discover/movie?api_key=522d421671cf75c2cba341597d86403a&sort_by=release_date.desc`, dates, genres, searchBar, nbMovies, nbPages);
-    return response.data;
+    return response;
   } catch (error) {
     console.error(`Erreur lors de la récupération des détails des films les plus récents.`);
     return null;
@@ -78,9 +90,9 @@ async function getFilmsRecence(dates, genres, searchBar) {
 async function getFilmsMieuxNotes(dates, genres, searchBar) {
   try {
     const response = await getMovies(`https://api.themoviedb.org/3/discover/movie?api_key=522d421671cf75c2cba341597d86403a&sort_by=vote_average.desc`, dates, genres, searchBar, nbMovies, nbPages);
-    return response.data;
+    return response;
   } catch (error) {
-    console.error(`Erreur lors de la récupération des détails du film avec l'ID ${idFilm}:`, error);
+    console.error(`Erreur lors de la récupération des détails des films les mieux notés.`);
     return null;
   }
 }
@@ -110,7 +122,7 @@ router.get('/', async function (req, res) {
     }
 
     const movies = await request(params.filters.dates, params.filters.genres, params.filters.searchBar);
-    
+
     if (movies) {
         appDataSource
         .getRepository(Movie_User)
