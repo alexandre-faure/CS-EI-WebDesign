@@ -2,6 +2,7 @@ import './Creercompte.css';
 import { useState, useEffect } from 'react';
 import bcrypt from 'bcryptjs';
 import axios from 'axios';
+import CineSuggest from './CineSuggest.svg'
 
 const DEFAULT_FORM_VALUES = {
     email: '',
@@ -51,8 +52,9 @@ function Creercompte() {
     
     return (
         <div>
-              <h1 className = 'h1cc'>Bienvenue sur "CineSuggest"</h1> 
+              <h1 className = 'h1cc'>Bienvenue sur</h1> 
                 <form className="centered" onSubmit={saveUser}>
+                    <img className = 'imgcc' src={CineSuggest}/>
                     <h2 className = 'h2cc'>Créer votre compte</h2>
                         <div className="group">
                             <input className ='inputcc' id="email" type="text" required="required"
