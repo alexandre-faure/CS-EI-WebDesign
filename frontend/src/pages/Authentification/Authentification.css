@@ -1,183 +1,179 @@
 /* LE FROMULAIRE */
 
-
 * {
-    box-sizing: border-box;
-  }
-
-  
-  body {
-    background: #333;
-  }
-  
-  .centered {
-    width: 550px;
-    height: 110px;
-    margin: auto;
-    
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  
-  .group {
-    width: 100%;
-    height: 80px;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .labelauth {
-    position: absolute;
-    top: 30px;
-    color: rgba(255, 255, 255, 0.5);
-    cursor: text;
-    transition: 0.25s ease;
-    font-size: 20px;
-}
-  
-  .inputauth {
-    display: block;
-    width: 100%;
-    padding-top: 40px;
-    border: none;
-    border-radius: 0;
-    color: white;
-    background: #333;
-    font-size: 20px;
-    transition: 0.3s ease;
+  box-sizing: border-box;
 }
 
+body {
+  background: #333;
+}
 
-  .inputauth:valid ~ label {
-    top: 0;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 15px;
-  }
+.centered {
+  width: 550px;
+  height: 110px;
+  margin: auto;
 
-  .inputauth:focus {
-    outline: none;
-  }
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 
-  .inputauth:focus ~ label {
-    font-size: 15px;
-    top: 0;
-    color: #2196f3;
-  }
+.group {
+  width: 100%;
+  height: 80px;
+  overflow: hidden;
+  position: relative;
+}
 
-  .inputauth[type=password] {
-    letter-spacing: 0.2em;
-  }
+.labelauth {
+  position: absolute;
+  top: 30px;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: text;
+  transition: 0.25s ease;
+  font-size: 20px;
+}
 
-  .inputauth:focus ~ .bar:before {
-    transform: translateX(0);
-  }
+.inputauth {
+  display: block;
+  width: 100%;
+  padding-top: 40px;
+  border: none;
+  border-radius: 0;
+  color: white;
+  background: #333;
+  font-size: 20px;
+  transition: 0.3s ease;
+}
 
-  .inputauth:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px #333 inset;
-    -webkit-text-fill-color: white !important;
-  }
-  
-  .bar {
-    background: rgba(255, 255, 255, 0.5);
-    content: "";
-    width: 550px;
-    height: 3.6666666667px;
-    transition: 0.3s ease;
-    position: relative;
-  }
-  .bar:before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 150%;
-    background: #2196f3;
-    transform: translateX(-100%);
-  }
-  
-  ::selection {
-    background: rgba(33, 150, 243, 0.3);
-  }
+.inputauth:valid ~ label {
+  top: 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 15px;
+}
+
+.inputauth:focus {
+  outline: none;
+}
+
+.inputauth:focus ~ label {
+  font-size: 15px;
+  top: 0;
+  color: #2196f3;
+}
+
+.inputauth[type='password'] {
+  letter-spacing: 0.2em;
+}
+
+.inputauth:focus ~ .bar:before {
+  transform: translateX(0);
+}
+
+.inputauth:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #333 inset;
+  -webkit-text-fill-color: white !important;
+}
+
+.bar {
+  background: rgba(255, 255, 255, 0.5);
+  content: '';
+  width: 550px;
+  height: 3.6666666667px;
+  transition: 0.3s ease;
+  position: relative;
+}
+.bar:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 150%;
+  background: #2196f3;
+  transform: translateX(-100%);
+}
+
+::selection {
+  background: rgba(33, 150, 243, 0.3);
+}
 
 /* LE BOUTON */
 
 .divbutton {
-    justify-items: right;
+  justify-items: right;
 }
 
 .button {
-    float: right;
-    border-radius: 10px;
-    background-color: #393939;
-    border: none;
-    color: #FFFFFF;
-    text-align: center;
-    font-size: 20px;
-    padding: 10px;
-    width: 200px;
-    transition: all 0.5s;
-    cursor: pointer;
-    margin: 5px;
+  float: right;
+  border-radius: 10px;
+  background-color: #393939;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 20px;
+  padding: 10px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
 }
-  
-  .button span {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-  }
-  
-  .button span:after {
-    content: '\00bb';
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
-  }
-  
-  .button:hover span {
-    padding-right: 25px;
-  }
-  
-  .button:hover span:after {
-    opacity: 1;
-    right: 0;
-  }
 
-  .creation {
-    color: darkgrey;
-    font-size: 15px;
-    float: left;
-    float: bottom;
-    padding: 25px 0px;
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.creation {
+  color: darkgrey;
+  font-size: 15px;
+  float: left;
+  float: bottom;
+  padding: 25px 0px;
 }
 
 .creation:hover {
-  color:#2196f3;
+  color: #2196f3;
   cursor: pointer;
 }
-
-
 
 /* LES TITRES */
 
 .h1auth {
-    text-align: center;
-    font-size: 30px;
-    color : white;
+  text-align: center;
+  font-size: 30px;
+  color: white;
+  padding: 20px 0;
 }
 
-.h2auth{
-  color : white ;
+.h2auth {
+  color: white;
 }
 
 /* Image */
 
 .imgauth {
-  width : 70% ;
-  display : block;
+  width: 70%;
+  display: block;
   margin-left: auto;
   margin-right: auto;
 }

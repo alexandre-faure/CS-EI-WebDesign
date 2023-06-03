@@ -379,9 +379,9 @@ function Home() {
 
   useEffect(() => {
     const sliders = [
-      { title: 'Recommandations', slider_id: 'recommandations' },
       { title: 'Les mieux notés', slider_id: 'best-note' },
       { title: 'Populaires', slider_id: 'popular' },
+      { title: 'Recommandations', slider_id: 'recommandations' },
       { title: 'Les plus récents', slider_id: 'most-recent' },
     ];
     axios

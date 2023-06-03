@@ -34,7 +34,7 @@ function FullPageList(data) {
         });
     };
     fetchData(state.activeDisplay);
-  });
+  }, [state.genres, state.searchBar, state.dates, state.movieDetailsIsOpen]);
 
   return (
     <div className="full-page-list-container">

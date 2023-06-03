@@ -2,6 +2,7 @@ import express from 'express';
 import { appDataSource } from '../datasource.js';
 import Movie_User from '../entities/movie_user.js';
 import axios from 'axios';
+import { SubjectWithoutIdentifierError } from 'typeorm';
 
 const router = express.Router();
 
@@ -19,10 +20,10 @@ async function getDetailsFilms(listeIdFilms, infos_user, dates, genres, searchBa
     const films = [];
     let i = 0;
 
-    while (i < listeIdFilms.length & films.length < nbMovies){
+    while (i < listeIdFilms.length && films.length < nbMovies){
       const idFilm = listeIdFilms[i];
       const movie = await getDetailsFilm(idFilm);
-
+      
       if (movie) {
           // Vérifier la date
         if (dates.length == 0 | ("release_date" in movie && dates.includes(movie.release_date.slice(0,3) + "0"))){
@@ -44,13 +45,14 @@ async function getDetailsFilms(listeIdFilms, infos_user, dates, genres, searchBa
           }
         }
       }
+      i++;
     }
     return films;
 }
 
 router.get('/:user_id/:nb', function (req, res) { // Renvoie tous les users
   const params = JSON.parse(req.query.settings);
-
+  
   appDataSource
     .getRepository(Movie_User)
     .find({})
@@ -59,8 +61,8 @@ router.get('/:user_id/:nb', function (req, res) { // Renvoie tous les users
         const nb_user_sim = 10;
         // Récupérer les likes par utilisateur
         const infos_user = {}
-      const dataPerUser = {};
-      movie_user.forEach(row => {
+        const dataPerUser = {};
+        movie_user.forEach(row => {
         if (row.movie_user_like != 0){
             if (row.movie_user_id_user == id_user){
                 infos_user[row.movie_user_id_movie] = {status:row.movie_user_status, like:row.movie_user_like}
@@ -78,14 +80,14 @@ router.get('/:user_id/:nb', function (req, res) { // Renvoie tous les users
       const characteristics = {};
       if (!(id_user in dataPerUser)){
         res.json({movies:{}})
-        return;
+        return [];
       }
     const ratedMovies = dataPerUser[id_user];
-    console.log(ratedMovies)
+    
     const moyX = Object.values(ratedMovies).reduce((acc, val) => acc + val, 0) / Object.keys(ratedMovies).length;
     characteristics[id_user] = {moy:moyX}
     delete dataPerUser[id_user];
-    Object.keys(dataPerUser).forEach(function(key, index) {
+    Object.keys(dataPerUser).forEach(function(key) {
         let commonMovies = Object.keys(dataPerUser[key]).filter(e => Object.keys(ratedMovies).includes(e));
         let moyY = Object.values(dataPerUser[key]).reduce((acc, val) => acc + val, 0) / Object.keys(dataPerUser[key]).length;
         characteristics[key] = {moy: moyY};
@@ -124,22 +126,23 @@ router.get('/:user_id/:nb', function (req, res) { // Renvoie tous les users
     const movie_pertinence = {};
 
       // Tri des utilisateurs par pertinence et suppressions des utilisateurs en trop
-      Object.keys(movies_recommandations).forEach(function(key, index) {
+      Object.keys(movies_recommandations).forEach(function(key) {
         let triUsers = Object.entries(movies_recommandations[key]).sort(([, valueA], [, valueB]) => valueB.sim - valueA.sim)
-        triUsers =triUsers.slice(0,nb_user_sim);
+        triUsers = triUsers.filter(element => element[0] != req.params.user_id)
+        triUsers = triUsers.slice(0,nb_user_sim);
         let pertinence = 0;
         let somme_sim = 0;
         triUsers.map(user => {
             pertinence += user[1].sim * (user[1].like - characteristics[user[0]].moy)
             somme_sim += Math.abs(user[1].sim);
         })
-        movie_pertinence[key] = moyX + pertinence/somme_sim;
+        movie_pertinence[key] = moyX + (somme_sim == 0 ? 0 : pertinence/somme_sim);
       })
 
       const list_id_sims = Object.entries(movie_pertinence).sort(([, valueA], [, valueB]) => valueB - valueA);
       const list_id = list_id_sims.map(([first_elem]) => first_elem);
 
-      getDetailsFilms(list_id, infos_user, req.params.nb)
+      getDetailsFilms(list_id, infos_user, params.dates, params.genres, params.searchBar, req.params.nb)
         .then((response) => {
             res.json({movies: response});
         })
