@@ -14,6 +14,18 @@ Au cours de ce projet, nous avons eu l'opportunité de mettre en pratique le con
 |Descamps |Nicolas |[nicolas.descamps@student-cs.fr](mailto:nicolas.descamps@student-cs.fr)|
 |Faure |Alexandre |[alexandre.faure@student-cs.fr](mailto:alexandre.faure@student-cs.fr)|
 
+## Aperçu de l'application
+
+Voici un aperçu de l'application web développée dans le cadre de ce projet.
+
+Page de connexion :
+
+![Interface de connexion](./images/login.png)
+
+Page d'accueil :
+
+![Aperçu de l'application](./images/preview.png)
+
 ## Prise en main du code
 
 ### Backend
